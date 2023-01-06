@@ -1,14 +1,13 @@
 //
-//  NetworkService.swift
+//  NetworkManager.swift
 //  Kinopoisk
 //
 //  Created by Mikhail Bagmet on 03.01.2023.
 //
 
-//import Foundation
 import Alamofire
 
-class NetworkService: NetworkServiceErrorHandler {
+class NetworkManager: NetworkServiceErrorHandler {
     
     // MARK: - Properties
     
@@ -53,7 +52,7 @@ class NetworkService: NetworkServiceErrorHandler {
     }
 }
 
-extension NetworkService {
+extension NetworkManager {
     enum kinopoiskAPI {
         static let domain = "https://api.kinopoisk.dev"
         static let token = "ZQQ8GMN-TN54SGK-NB3MKEC-ZKB8V06"
