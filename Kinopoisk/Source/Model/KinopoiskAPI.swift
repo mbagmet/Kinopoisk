@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct KinopoiskAPI: Decodable {
+    let docs: Films?
+}

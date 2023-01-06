@@ -10,8 +10,8 @@ import Foundation
 // MARK: - Film
 
 struct Film: Decodable {
-    let externalID: ExternalID
-    let logo: Logo
+    //let externalID: ExternalID
+    //let logo: Logo
     let poster: Poster?
     let backdrop: Poster?
     let rating: Rating
@@ -23,41 +23,41 @@ struct Film: Decodable {
     let premiere: Premiere?
     let images: Images?
     let watchability: Watchability
-    let collections, updateDates: [JSONAny]
-    let status: String
-    let productionCompanies: [ProductionCompany]
-    let spokenLanguages: [SpokenLanguage]
+    //let collections, updateDates: [JSONAny]
+    //let status: String
+    let productionCompanies: [ProductionCompany]?
+    let spokenLanguages: [SpokenLanguage]?
     let id: Int
     let type: FilmType
     let name: String?
     let description: String?
     let year: Int?
-    let facts: [Fact]
-    let genres, countries: [Country]
-    let seasonsInfo: [JSONAny]
-    let persons: [Person]
-    let lists: [JSONAny]
-    let typeNumber: Int
+    let facts: [Fact]?
+    let genres, countries: [Country]?
+    let seasonsInfo: [JSONAny]?
+    let persons: [Person]?
+    let lists: [JSONAny]?
+    let typeNumber: Int?
     let alternativeName: String?
-    let enName: JSONNull?
+    let enName: String?
     let movieLength: Int?
     let names: [Name]
-    let updatedAt, ratingMPAA: String
+    let updatedAt, ratingMPAA: String?
     let shortDescription: String?
-    let technology: Technology
-    let ticketsOnSale: Bool
-    let sequelsAndPrequels: [SequelsAndPrequel]
-    let similarMovies: [JSONAny]
-    let imagesInfo: ImagesInfo
-    let ageRating: Int
+    let technology: Technology?
+    let ticketsOnSale: Bool?
+    let sequelsAndPrequels: [SequelsAndPrequel]?
+    let similarMovies: [JSONAny]?
+    let imagesInfo: ImagesInfo?
+    let ageRating: Int?
     let top10: JSONNull?
-    let top250: Int
-    let createDate: String
-    let releaseYears: [JSONAny]
+    let top250: Int?
+    let createDate: String?
+    let releaseYears: [JSONAny]?
     
     enum CodingKeys: String, CodingKey {
-        case externalID = "eternalId"
-        case logo, poster, backdrop, rating, votes, videos, budget, fees, distributors, premiere, images, watchability, collections, updateDates, status, productionCompanies, spokenLanguages, id, type, name, description, year, facts, genres, countries, seasonsInfo, persons, lists, typeNumber, alternativeName, enName, movieLength, names, updatedAt
+        //case externalID = "eternalId"
+        case poster, backdrop, rating, votes, videos, budget, fees, distributors, premiere, images, watchability, /*collections, updateDates, status,*/ productionCompanies, spokenLanguages, id, type, name, description, year, facts, genres, countries, seasonsInfo, persons, lists, typeNumber, alternativeName, enName, movieLength, names, updatedAt
         case ratingMPAA = "ratingMpaa"
         case shortDescription, technology, ticketsOnSale, sequelsAndPrequels, similarMovies, imagesInfo, ageRating, top10, top250, createDate, releaseYears
     }
@@ -114,24 +114,24 @@ extension Film {
     }
 
     // MARK: - Rating
-    struct Rating: Decodable {
-        let id: String
-        let kp: Double
-        let imdb: Int
-        let filmCritics: Int
-        let russianFilmCritics: Int
+    struct Rating: Codable {
+        let kp, imdb, filmCritics, russianFilmCritics: Double
         let ratingAwait: Double
+        let id: String
 
         enum CodingKeys: String, CodingKey {
-            case id = "_id"
             case kp, imdb, filmCritics, russianFilmCritics
             case ratingAwait = "await"
+            case id = "_id"
         }
     }
 
     enum FilmType: String, Decodable {
+        case animatedSeries = "animated-series"
+        case anime = "anime"
         case cartoon = "cartoon"
         case movie = "movie"
+        case tvSeries = "tv-series"
     }
     
     // MARK: - Videos
@@ -298,13 +298,13 @@ extension Film {
     // MARK: - Item
     struct Item: Decodable {
         let logo: Logo
-        let name: String
+        let id, name: String
         let url: String
-        let id: String
 
         enum CodingKeys: String, CodingKey {
-            case logo, name, url
+            case logo
             case id = "_id"
+            case name, url
         }
     }
 }

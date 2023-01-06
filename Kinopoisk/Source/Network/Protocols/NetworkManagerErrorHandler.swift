@@ -8,5 +8,5 @@
 import Foundation
 
 protocol NetworkManagerErrorHandler {
-    var delegate: NetworkServiceDelegate? { get set }
+    var delegate: NetworkManagerDelegate? { get set }
 }

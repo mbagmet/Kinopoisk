@@ -7,16 +7,19 @@
 
 import Alamofire
 
-class NetworkManager: NetworkServiceErrorHandler {
+class NetworkManager: NetworkManagerErrorHandler {
     
     // MARK: - Properties
     
-    var delegate: NetworkServiceDelegate?
+    var delegate: NetworkManagerDelegate?
     
-    private var url: String { "\(kinopoiskAPI.domain)\(kinopoiskSections.movie)" }
-    private var parameters = ["token": kinopoiskAPI.token]
+    private var url: String { "\(kinopoiskAPI.domain)/\(kinopoiskSections.movie)" }
+    private var parameters = ["token": kinopoiskAPI.token,
+                              "limit": kinopoiskAPI.itemsPerPage,
+                              "sortType": kinopoiskAPI.sortType,
+                              "sortField": kinopoiskAPI.sortField]
 
-    // MARK: - Functions
+    // MARK: - Methods
     
     func fetchData(filmName: String?, completion: @escaping ([Film]) -> ()) {
         if let name = filmName {
@@ -42,9 +45,10 @@ class NetworkManager: NetworkServiceErrorHandler {
                 }
             }
             .responseDecodable(of: Films.self) { (response) in
+                debugPrint(response)
                 guard let films = response.value?.all else { return }
-                
                 if films.count == 0 {
+                    print("No films found!")
                     self.delegate?.showAlert(message: nil)
                 }
                 completion(films)
@@ -57,6 +61,9 @@ extension NetworkManager {
         static let domain = "https://api.kinopoisk.dev"
         static let token = "ZQQ8GMN-TN54SGK-NB3MKEC-ZKB8V06"
         static let field = "name"
+        static let itemsPerPage = "100"
+        static let sortField = "rating.kp"
+        static let sortType = "-1"
     }
     
     enum kinopoiskSections {
