@@ -45,7 +45,7 @@ class NetworkManager: NetworkManagerErrorHandler {
                 }
             }
             .responseDecodable(of: Films.self) { (response) in
-                debugPrint(response)
+                //debugPrint(response)
                 guard let films = response.value?.all else { return }
                 if films.count == 0 {
                     print("No films found!")

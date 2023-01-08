@@ -29,13 +29,14 @@ class FilmsListViewModel: FilmsListViewModelType {
         return model?.count ?? 0
     }
     
-//    func makeCellViewModel(forIndexPath indexPath: IndexPath) -> FilmsTableViewCellViewModelType? {
-//        
-//    }
-    
-    func titleForCell(atIndexPath indexPath: IndexPath) -> String {
-        guard let movies = model else { return "" }
-        return movies[indexPath.row].names[0].name
+    func makeCellViewModel(forIndexPath indexPath: IndexPath) -> FilmsTableViewCellViewModelType? {
+        guard let film = model?[indexPath.row] else { return nil }
+        return FilmsTableViewCellViewModel(film: film)
     }
+    
+//    func titleForCell(atIndexPath indexPath: IndexPath) -> String {
+//        guard let movies = model else { return "" }
+//        return movies[indexPath.row].names[0].name
+//    }
     
 }

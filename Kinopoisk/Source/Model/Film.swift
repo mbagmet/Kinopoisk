@@ -111,6 +111,28 @@ extension Film {
             case url
             case previewURL = "previewUrl"
         }
+        
+        func getImage(size: ImageSize, queue: DispatchQueue = DispatchQueue.global(qos: .utility), completion: @escaping (Data?) -> ()) {
+            var data: Data?
+            
+            let workItem = DispatchWorkItem {
+                guard let imageURL = URL(string: "\(size == .small ? previewURL : url)"),
+                      let imageData = try? Data(contentsOf: imageURL)
+                else { return }
+                data = imageData
+            }
+            
+            workItem.notify(queue: .main) {
+                completion(data)
+            }
+            
+            queue.async(execute: workItem)
+        }
+        
+        enum ImageSize {
+            case small
+            case big
+        }
     }
 
     // MARK: - Rating

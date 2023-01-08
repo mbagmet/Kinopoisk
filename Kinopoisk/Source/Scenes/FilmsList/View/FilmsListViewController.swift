@@ -42,7 +42,7 @@ class FilmsListViewController: UIViewController {
         
         // MARK: UITableView Setup
         setupDataSource()
-        //setupDelegate()
+        setupDelegate()
         setupTableCells()
     }
     
@@ -66,9 +66,9 @@ class FilmsListViewController: UIViewController {
         filmsTableView.dataSource = self
     }
 
-//    private func setupDelegate() {
-//        filmsTableView.delegate = self
-//    }
+    private func setupDelegate() {
+        filmsTableView.delegate = self
+    }
     
     private func setupTableCells() {
         filmsTableView.register(FilmsListTableViewCell.self, forCellReuseIdentifier: FilmsListTableViewCell.identifier)
@@ -93,22 +93,34 @@ extension FilmsListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let model = model[indexPath.row]
-//
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: CharacterTableViewCell.identifier, for: indexPath) as? CharacterTableViewCell else {
-//            return UITableViewCell()
-//        }
-//
-//        cell.configureCell(with: model)
-//        return cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: FilmsListTableViewCell.identifier, for: indexPath)
-        cell.textLabel?.text = viewModel?.titleForCell(atIndexPath: indexPath)
-        return cell
+  
+        let cell = tableView.dequeueReusableCell(withIdentifier: FilmsListTableViewCell.identifier, for: indexPath) as? FilmsListTableViewCell
+        
+        guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
+        
+        let cellViewModel = viewModel.makeCellViewModel(forIndexPath: indexPath)
+        tableViewCell.viewModel = cellViewModel
+
+        return tableViewCell
+    }
+}
+
+// MARK: - Delegate, обработка высоты рядов
+// Работает в паре с setupDelegate()
+
+extension FilmsListViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return Metric.FilmListCellHeight
     }
 }
 
 // MARK: - Constants
 extension FilmsListViewController {
+    enum Metric {
+        static let FilmListCellHeight: CGFloat = 120
+    }
+    
     enum Strings {
         static let searchBarPlaceholder = "Поиск по имени персонажа"
         static let navigationTitle = "Фильмы"
