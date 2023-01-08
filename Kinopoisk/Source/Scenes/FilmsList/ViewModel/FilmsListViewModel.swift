@@ -33,10 +33,4 @@ class FilmsListViewModel: FilmsListViewModelType {
         guard let film = model?[indexPath.row] else { return nil }
         return FilmsTableViewCellViewModel(film: film)
     }
-    
-//    func titleForCell(atIndexPath indexPath: IndexPath) -> String {
-//        guard let movies = model else { return "" }
-//        return movies[indexPath.row].names[0].name
-//    }
-    
 }
