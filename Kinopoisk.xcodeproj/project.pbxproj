@@ -32,7 +32,6 @@
 		D9CDF4492968475F00728ECC /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CDF4482968475F00728ECC /* UIColor+Ext.swift */; };
 		D9CDF44B2968494000728ECC /* FilmsListViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CDF44A2968494000728ECC /* FilmsListViewModelType.swift */; };
 		D9CDF44D296849E000728ECC /* FilmsTableViewCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CDF44C296849E000728ECC /* FilmsTableViewCellViewModelType.swift */; };
-		D9CDF44F29685E7300728ECC /* KinopoiskAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CDF44E29685E7300728ECC /* KinopoiskAPI.swift */; };
 		D9CDF4512968751900728ECC /* FilmsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CDF4502968751900728ECC /* FilmsListTableViewCell.swift */; };
 		D9CDF4532968872C00728ECC /* FilmsTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CDF4522968872C00728ECC /* FilmsTableViewCellViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -63,7 +62,6 @@
 		D9CDF4482968475F00728ECC /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		D9CDF44A2968494000728ECC /* FilmsListViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsListViewModelType.swift; sourceTree = "<group>"; };
 		D9CDF44C296849E000728ECC /* FilmsTableViewCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsTableViewCellViewModelType.swift; sourceTree = "<group>"; };
-		D9CDF44E29685E7300728ECC /* KinopoiskAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinopoiskAPI.swift; sourceTree = "<group>"; };
 		D9CDF4502968751900728ECC /* FilmsListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsListTableViewCell.swift; sourceTree = "<group>"; };
 		D9CDF4522968872C00728ECC /* FilmsTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsTableViewCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -188,7 +186,6 @@
 		D9719B4229633B4B00E43E5D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D9CDF44E29685E7300728ECC /* KinopoiskAPI.swift */,
 				D9580284296469E9002C7D09 /* Films.swift */,
 				D95802822964669F002C7D09 /* Film.swift */,
 			);
@@ -355,7 +352,6 @@
 			files = (
 				D9CDF44B2968494000728ECC /* FilmsListViewModelType.swift in Sources */,
 				D958027F2964540C002C7D09 /* NetworkManagerDelegate.swift in Sources */,
-				D9CDF44F29685E7300728ECC /* KinopoiskAPI.swift in Sources */,
 				D9719B542963491300E43E5D /* FilmsListCoordinator.swift in Sources */,
 				D9719B4F2963486E00E43E5D /* AppCoordinator.swift in Sources */,
 				D9719B4D2963475300E43E5D /* FilmsListViewModel.swift in Sources */,
