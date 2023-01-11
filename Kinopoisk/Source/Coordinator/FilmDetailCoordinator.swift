@@ -12,21 +12,23 @@ class FilmDetailCoordinator: Coordinator, FilmDetailFlow {
     // MARK: - Properties
     
     var navigationController: UINavigationController
+    var viewModel: FilmDetailViewModelType?
     
     // MARK: - Initializers
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, viewModel: FilmDetailViewModelType?) {
         self.navigationController = navigationController
+        self.viewModel = viewModel
     }
     
     // MARK: - Methods
     
     func start() {
         let filmDetailViewController = FilmDetailViewController()
-        let viewModel = FilmDetailViewModel()
-        
+        let viewModel = viewModel
+
         filmDetailViewController.coordinator = self
-        filmDetailViewController.viewModel = viewModel
+        filmDetailViewController.viewModel = viewModel as? FilmDetailViewModel
         
         navigationController.pushViewController(filmDetailViewController, animated: true)
     }

@@ -12,7 +12,7 @@ class FilmsListViewController: UIViewController {
     
     // MARK: - Properties
     
-    weak var coordinator: FilmsListFlow?
+    var coordinator: FilmsListFlow?
     var viewModel: FilmsListViewModelType?
     
     // MARK: - Views
@@ -28,7 +28,6 @@ class FilmsListViewController: UIViewController {
         setupNavigation()
         
         // MARK: ViewModel configuration
-        viewModel = FilmsListViewModel()
         viewModel?.fetchMovies { [weak self] in
             DispatchQueue.main.async {
                 self?.filmsTableView.reloadData()
@@ -105,13 +104,22 @@ extension FilmsListViewController: UITableViewDataSource {
     }
 }
 
-// MARK: - Delegate, обработка высоты рядов
+// MARK: - Delegate
 // Работает в паре с setupDelegate()
 
 extension FilmsListViewController: UITableViewDelegate {
 
+    // MARK: Make table row height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Metric.FilmListCellHeight
+    }
+    
+    // MARK: Cell tap handling
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let viewModel = viewModel else { return }
+        viewModel.selectRow(atIndexPath: indexPath)
+        
+        coordinator?.coordinateToFilmDetail(viewModel: viewModel.makeDetailViewModel())
     }
 }
 

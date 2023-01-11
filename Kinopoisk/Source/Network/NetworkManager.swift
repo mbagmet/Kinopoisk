@@ -21,7 +21,7 @@ class NetworkManager: NetworkManagerErrorHandler {
 
     // MARK: - Methods
     
-    func fetchData(filmName: String?, completion: @escaping ([Film]) -> ()) {
+    func fetchData(filmName: String? = nil, filmID: Int? = nil, completion: @escaping ([Film]) -> ()) {
         if let name = filmName {
             switch name {
             case "":
@@ -31,6 +31,11 @@ class NetworkManager: NetworkManagerErrorHandler {
                 parameters["search"] = name
                 parameters["field"] = kinopoiskAPI.field
             }
+        }
+        if let id = filmID {
+            parameters["search"] = String(id)
+            parameters["field"] = kinopoiskAPI.fieldID
+            print(parameters)
         }
     
         AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default)
@@ -45,7 +50,7 @@ class NetworkManager: NetworkManagerErrorHandler {
                 }
             }
             .responseDecodable(of: Films.self) { (response) in
-                //debugPrint(response)
+                debugPrint(response)
                 guard let films = response.value?.all else { return }
                 if films.count == 0 {
                     print("No films found!")
@@ -59,11 +64,12 @@ class NetworkManager: NetworkManagerErrorHandler {
 extension NetworkManager {
     enum kinopoiskAPI {
         static let domain = "https://api.kinopoisk.dev"
-        static let token = "ZQQ8GMN-TN54SGK-NB3MKEC-ZKB8V06"
+        static let token = "MG7QBWA-KJ8MC4G-JZTTK0F-Q1C8N70"
         static let field = "name"
         static let itemsPerPage = "100"
         static let sortField = "rating.kp"
         static let sortType = "-1"
+        static let fieldID = "id"
     }
     
     enum kinopoiskSections {

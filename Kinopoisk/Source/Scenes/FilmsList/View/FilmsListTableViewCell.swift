@@ -29,7 +29,7 @@ class FilmsListTableViewCell: UITableViewCell {
     // MARK: - Views
     
     // MARK: Poster Image
-    lazy var thumbnailImage: UIImageView = {
+    private lazy var thumbnailImage: UIImageView = {
         var imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = .secondarySystemBackground

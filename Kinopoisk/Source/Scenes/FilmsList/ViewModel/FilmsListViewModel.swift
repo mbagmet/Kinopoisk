@@ -33,4 +33,15 @@ class FilmsListViewModel: FilmsListViewModelType {
         guard let film = model?[indexPath.row] else { return nil }
         return FilmsTableViewCellViewModel(film: film)
     }
+    
+    func makeDetailViewModel() -> FilmDetailViewModelType? {
+        guard let selectedIndexPath = selectedIndexPath else { return nil }
+        let filmID = model?[selectedIndexPath.row].id
+
+        return FilmDetailViewModel(filmID: filmID)
+    }
+    
+    func selectRow(atIndexPath indexPath: IndexPath) {
+        self.selectedIndexPath = indexPath
+    }
 }

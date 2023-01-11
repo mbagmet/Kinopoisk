@@ -15,7 +15,6 @@ class FilmsTableViewCellViewModel: FilmsTableViewCellViewModelType {
 
     // MARK: - Properties
     
-    //static var poster: UIImage?
     var filmTitle: String? {
         return film.name ?? film.names.first?.name
     }
