@@ -15,17 +15,21 @@ class FilmDetailViewModel: FilmDetailViewModelType {
     var filmID: Int?
     var film: Film?
 
-    // MARK: - Properties
+    // MARK: - Network
     
     private let networkManager = NetworkManager()
     
-    var filmTitleID: String? {
-        return String(describing: film?.name) //film?.name ?? film?.names.first?.name
-    }
-    
+    // MARK: - Properties
+
     var filmBackgroundImage: Box<UIImage?> = Box(nil)
     var filmLogoImage: Box<UIImage?> = Box(nil)
     var filmTitle: Box<String?> = Box(nil)
+    
+    // MARK: - Initializers
+    
+    init(filmID: Int?) {
+        self.filmID = filmID
+    }
     
     // MARK: - Methods
     
@@ -40,14 +44,6 @@ class FilmDetailViewModel: FilmDetailViewModelType {
         filmTitle = Box(film?.name ?? film?.names.first?.name)
         //filmBackgroundImageURL = Box(film?.backdrop)
     }
-    
-    // MARK: - Initializers
-    
-    init(filmID: Int?) {
-        self.filmID = filmID
-    }
-    
-    // MARK: - Methods
     
     func getImage(for imageView: UIImageView?, type: ImageType, size: Film.Poster.ImageSize = .big) {
         var imageData: Film.Poster?
@@ -68,15 +64,6 @@ class FilmDetailViewModel: FilmDetailViewModelType {
             imageView?.image = UIImage(data: data)
         })
     }
-    
-//    func getLogo(for imageView: UIImageView?) {
-//        film?.logo?.getImage(completion: { data in
-//            guard let data = data else { return }
-//            imageView?.image = UIImage(data: data)
-//        })
-//    }
-    
-    // MARK: - Private Methods
 }
 
 extension FilmDetailViewModel {

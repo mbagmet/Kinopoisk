@@ -9,12 +9,12 @@ import UIKit
 
 // MARK: - ImageView creation
 
-public extension UIImageView {
+extension UIImageView {
     static func createImageView(contentMode: UIView.ContentMode,
                                 image: UIImage? = nil,
                                 backgroundColor: UIColor? = nil,
                                 tintColor: UIColor? = nil) -> UIImageView {
-        var imageView = UIImageView()
+        let imageView = UIImageView()
         
         imageView.contentMode = contentMode
         imageView.tintColor = backgroundColor

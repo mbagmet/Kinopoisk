@@ -54,41 +54,8 @@ class FilmDetailViewController: UIViewController {
     private lazy var gradientImage = UIImageView.createImageView(contentMode: .scaleAspectFit, image: UIImage(named: "GradientBackground"))
     private lazy var logoImage = UIImageView.createImageView(contentMode: .scaleAspectFit)
     
-    
-//    private lazy var backgroundImage: UIImageView = {
-//        var imageView = UIImageView()
-//        imageView.contentMode = .scaleAspectFill
-//        //imageView.tintColor = .secondarySystemBackground
-//        imageView.backgroundColor = .systemGray
-//
-//        imageView.clipsToBounds = true
-//        imageView.layer.masksToBounds = true
-//        return imageView
-//    }()
-    
-//    private lazy var logoImage: UIImageView = {
-//        var imageView = UIImageView()
-//        imageView.contentMode = .scaleAspectFit
-//        //imageView.backgroundColor = .secondarySystemBackground
-//
-//        imageView.clipsToBounds = true
-//        imageView.layer.masksToBounds = true
-//        return imageView
-//    }()
-    
-//    private lazy var gradientImage: UIImageView = {
-//        var imageView = UIImageView()
-//        imageView.contentMode = .scaleAspectFit
-//        imageView.image = UIImage(named: "GradientBackground")
-//        //imageView.backgroundColor = .secondarySystemBackground
-//
-//        imageView.clipsToBounds = true
-//        imageView.layer.masksToBounds = true
-//        return imageView
-//    }()
-    
     // MARK: Labels
-    private lazy var titleLabel = createLabel(fontWeight: .medium, fontSize: 24, numberOfLines: 2, textColor: .white)
+    private lazy var titleLabel = UILabel.createLabel(fontWeight: .medium, fontSize: 24, numberOfLines: 2, textColor: .white)
     
     // MARK: - Settings
     
@@ -169,21 +136,6 @@ class FilmDetailViewController: UIViewController {
             make.top.equalTo(blackContainer.snp.top).offset(-30)
             //make.center.equalToSuperview()
         }
-    }
-    
-    // MARK: - Private Methods
-
-    private func createLabel(fontWeight: UIFont.Weight,
-                             fontSize: CGFloat = 14,
-                             numberOfLines: Int = 1,
-                             textColor: UIColor = .label) -> UILabel {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: fontSize, weight: fontWeight)
-        label.numberOfLines = numberOfLines
-        label.textColor = textColor
-        label.textAlignment = .center
-        
-        return label
     }
 }
 

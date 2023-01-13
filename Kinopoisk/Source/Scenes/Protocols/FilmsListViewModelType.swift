@@ -9,6 +9,8 @@ import Foundation
 
 protocol FilmsListViewModelType {
     
+    var model: [Film]? { get }
+    
     // MARK: Fetching data from model
     func fetchMovies(completion: @escaping() -> ())
     
