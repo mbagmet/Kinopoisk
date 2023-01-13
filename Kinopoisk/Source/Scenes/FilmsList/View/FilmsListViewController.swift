@@ -82,8 +82,7 @@ extension FilmsListViewController {
     }
 }
 
-// MARK: - Data source, модель ячейки
-// Работает в паре с setupDataSource()
+// MARK: - Data source, cell model
 
 extension FilmsListViewController: UITableViewDataSource {
 
@@ -105,7 +104,6 @@ extension FilmsListViewController: UITableViewDataSource {
 }
 
 // MARK: - Delegate
-// Работает в паре с setupDelegate()
 
 extension FilmsListViewController: UITableViewDelegate {
 
@@ -130,7 +128,7 @@ extension FilmsListViewController {
     }
     
     enum Strings {
-        static let searchBarPlaceholder = "Поиск по имени персонажа"
+        static let searchBarPlaceholder = "Поиск по названию фильма"
         static let navigationTitle = "Фильмы"
         
         static let errorAlertTitle = "Ошибка"

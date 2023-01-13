@@ -33,7 +33,6 @@ class FilmDetailViewController: UIViewController {
         setupView()
         setupHierarchy()
         setupLayout()
-        setupNavigation()
         
 //        mainStackView.backgroundColor = .systemGreen
 //        mainContainer.backgroundColor = .systemBlue
@@ -51,37 +50,42 @@ class FilmDetailViewController: UIViewController {
     private lazy var mainStackView = UIStackView.createStackView(axis: .vertical, distribution: .fill, alignment: .fill)
 
     // MARK: Poster Image
-    private lazy var backgroundImage: UIImageView = {
-        var imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        //imageView.tintColor = .secondarySystemBackground
-        imageView.backgroundColor = .systemGray
-
-        imageView.clipsToBounds = true
-        imageView.layer.masksToBounds = true
-        return imageView
-    }()
+    private lazy var backgroundImage = UIImageView.createImageView(contentMode: .scaleAspectFill, backgroundColor: .systemGray)
+    private lazy var gradientImage = UIImageView.createImageView(contentMode: .scaleAspectFit, image: UIImage(named: "GradientBackground"))
+    private lazy var logoImage = UIImageView.createImageView(contentMode: .scaleAspectFit)
     
-    private lazy var logoImage: UIImageView = {
-        var imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        //imageView.backgroundColor = .secondarySystemBackground
-
-        imageView.clipsToBounds = true
-        imageView.layer.masksToBounds = true
-        return imageView
-    }()
     
-    private lazy var gradientImage: UIImageView = {
-        var imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "GradientBackground")
-        //imageView.backgroundColor = .secondarySystemBackground
-
-        imageView.clipsToBounds = true
-        imageView.layer.masksToBounds = true
-        return imageView
-    }()
+//    private lazy var backgroundImage: UIImageView = {
+//        var imageView = UIImageView()
+//        imageView.contentMode = .scaleAspectFill
+//        //imageView.tintColor = .secondarySystemBackground
+//        imageView.backgroundColor = .systemGray
+//
+//        imageView.clipsToBounds = true
+//        imageView.layer.masksToBounds = true
+//        return imageView
+//    }()
+    
+//    private lazy var logoImage: UIImageView = {
+//        var imageView = UIImageView()
+//        imageView.contentMode = .scaleAspectFit
+//        //imageView.backgroundColor = .secondarySystemBackground
+//
+//        imageView.clipsToBounds = true
+//        imageView.layer.masksToBounds = true
+//        return imageView
+//    }()
+    
+//    private lazy var gradientImage: UIImageView = {
+//        var imageView = UIImageView()
+//        imageView.contentMode = .scaleAspectFit
+//        imageView.image = UIImage(named: "GradientBackground")
+//        //imageView.backgroundColor = .secondarySystemBackground
+//
+//        imageView.clipsToBounds = true
+//        imageView.layer.masksToBounds = true
+//        return imageView
+//    }()
     
     // MARK: Labels
     private lazy var titleLabel = createLabel(fontWeight: .medium, fontSize: 24, numberOfLines: 2, textColor: .white)

@@ -29,16 +29,9 @@ class FilmsListTableViewCell: UITableViewCell {
     // MARK: - Views
     
     // MARK: Poster Image
-    private lazy var thumbnailImage: UIImageView = {
-        var imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .secondarySystemBackground
-        imageView.backgroundColor = .secondarySystemBackground
-
-        imageView.clipsToBounds = true
-        imageView.layer.masksToBounds = true
-        return imageView
-    }()
+    private lazy var thumbnailImage = UIImageView.createImageView(contentMode: .scaleAspectFit,
+                                                                  backgroundColor: .secondarySystemBackground,
+                                                                  tintColor: .secondarySystemBackground)
     
     // MARK: Stack views
     private lazy var mainStackView = UIStackView.createStackView(axis: .vertical, distribution: .equalSpacing, alignment: .leading)
@@ -94,17 +87,17 @@ class FilmsListTableViewCell: UITableViewCell {
 
     private func setupLayout() {
         thumbnailImage.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(Metric.horizontalOffset)
+            make.leading.equalToSuperview().offset(CommonMetrics.leadingOffset)
             make.top.equalToSuperview().offset(Metric.verticalOffset)
-            make.trailing.equalTo(mainStackView.snp.leadingMargin).offset(-Metric.horizontalOffset)
+            make.trailing.equalTo(mainStackView.snp.leadingMargin).offset(CommonMetrics.trailingOffset)
             make.bottom.equalToSuperview().offset(-Metric.verticalOffset)
             make.width.equalTo(thumbnailImage.snp.height).dividedBy(Metric.posterRatio)
         }
         
         mainStackView.snp.makeConstraints { make in
-            make.leading.equalTo(thumbnailImage.snp.trailing).offset(Metric.horizontalOffset)
+            make.leading.equalTo(thumbnailImage.snp.trailing).offset(CommonMetrics.leadingOffset)
             make.top.equalToSuperview().offset(Metric.verticalOffset)
-            make.trailing.equalToSuperview().offset(-Metric.horizontalOffset)
+            make.trailing.equalToSuperview().offset(CommonMetrics.trailingOffset)
             make.bottom.equalToSuperview().offset(-Metric.verticalOffset)
         }
         
@@ -119,17 +112,6 @@ class FilmsListTableViewCell: UITableViewCell {
     }
     
     // MARK: - Private functions
-
-//    private func createStackView(axis: NSLayoutConstraint.Axis, distribution: UIStackView.Distribution, alignment: UIStackView.Alignment) -> UIStackView {
-//        let stackView = UIStackView()
-//
-//        stackView.axis = axis
-//        stackView.distribution = distribution
-//        stackView.spacing = Metric.stackViewSpacing
-//        stackView.alignment = alignment
-//
-//        return stackView
-//    }
     
     private func createLabel(fontWeight: UIFont.Weight,
                              fontSize: CGFloat = Metric.defaultFontSize,
@@ -150,7 +132,6 @@ extension FilmsListTableViewCell {
     enum Metric {
         static let stackViewSpacing: CGFloat = 2
         static let verticalOffset: CGFloat = 10
-        static let horizontalOffset: CGFloat = 20
         
         static let posterRatio: CGFloat = 1.48
         

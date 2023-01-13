@@ -7,7 +7,9 @@
 
 import UIKit
 
-extension UIStackView {
+// MARK: - StackView creation
+
+public extension UIStackView {
     static func createStackView(axis: NSLayoutConstraint.Axis,
                                 distribution: UIStackView.Distribution,
                                 alignment: UIStackView.Alignment,
