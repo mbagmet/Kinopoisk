@@ -35,7 +35,7 @@ class FilmsTableViewCellViewModel: FilmsTableViewCellViewModelType {
         self.film = film
     }
     
-    // MARK: - Private methods
+    // MARK: - Methods
     
     func getImage(for imageView: UIImageView?) {
         film.poster?.getImage(size: .small, completion: { data in

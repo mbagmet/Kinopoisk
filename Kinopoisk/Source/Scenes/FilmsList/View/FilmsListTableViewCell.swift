@@ -41,8 +41,8 @@ class FilmsListTableViewCell: UITableViewCell {
     }()
     
     // MARK: Stack views
-    private lazy var mainStackView = createStackView(axis: .vertical, distribution: .equalSpacing, alignment: .leading)
-    private lazy var textStackView = createStackView(axis: .vertical, distribution: .equalSpacing, alignment: .leading)
+    private lazy var mainStackView = UIStackView.createStackView(axis: .vertical, distribution: .equalSpacing, alignment: .leading)
+    private lazy var textStackView = UIStackView.createStackView(axis: .vertical, distribution: .equalSpacing, alignment: .leading)
     
     // MARK: Labels
     private lazy var titleLabel = createLabel(fontWeight: .bold, fontSize: Metric.titleFontSize, numberOfLines: Metric.titleNumberOfLines)
@@ -120,16 +120,16 @@ class FilmsListTableViewCell: UITableViewCell {
     
     // MARK: - Private functions
 
-    private func createStackView(axis: NSLayoutConstraint.Axis, distribution: UIStackView.Distribution, alignment: UIStackView.Alignment) -> UIStackView {
-        let stackView = UIStackView()
-
-        stackView.axis = axis
-        stackView.distribution = distribution
-        stackView.spacing = Metric.stackViewSpacing
-        stackView.alignment = alignment
-
-        return stackView
-    }
+//    private func createStackView(axis: NSLayoutConstraint.Axis, distribution: UIStackView.Distribution, alignment: UIStackView.Alignment) -> UIStackView {
+//        let stackView = UIStackView()
+//
+//        stackView.axis = axis
+//        stackView.distribution = distribution
+//        stackView.spacing = Metric.stackViewSpacing
+//        stackView.alignment = alignment
+//
+//        return stackView
+//    }
     
     private func createLabel(fontWeight: UIFont.Weight,
                              fontSize: CGFloat = Metric.defaultFontSize,

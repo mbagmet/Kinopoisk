@@ -6,6 +6,7 @@
 //
 
 import Alamofire
+import Foundation
 
 class NetworkManager: NetworkManagerErrorHandler {
     
@@ -22,6 +23,53 @@ class NetworkManager: NetworkManagerErrorHandler {
     // MARK: - Methods
     
     func fetchData(filmName: String? = nil, filmID: Int? = nil, completion: @escaping ([Film]) -> ()) {
+        addParametersToRequest(filmName: filmName)
+    
+        AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default)
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .responseData { response in
+                self.validateResponse(response: response)
+            }
+            .responseDecodable(of: Films.self) { (response) in
+                debugPrint(response)
+                guard let films = response.value?.all else { return }
+                if films.count == 0 {
+                    print("No films found!")
+                    self.delegate?.showAlert(message: nil)
+                }
+                completion(films)
+            }
+    }
+    
+    func fetchFilm(for filmID: Int?, completion: @escaping (Film) -> ()) {
+        addParametersToRequest(filmID: filmID)
+        
+        AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default)
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .responseData { response in
+                self.validateResponse(response: response)
+            }
+            .responseDecodable(of: Film.self) { (response) in
+                //debugPrint(response)
+                guard let film = response.value else { return }
+                completion(film)
+            }
+    }
+    
+    // MARK: - Private Methods
+    
+    private func validateResponse(response: AFDataResponse<Data>) {
+        switch response.result {
+        case .success:
+            print("Validation Successful")
+        case let .failure(error):
+            self.delegate?.showAlert(message: error.errorDescription?.description)
+        }
+    }
+    
+    private func addParametersToRequest(filmName: String? = nil, filmID: Int? = nil) {
         if let name = filmName {
             switch name {
             case "":
@@ -35,29 +83,7 @@ class NetworkManager: NetworkManagerErrorHandler {
         if let id = filmID {
             parameters["search"] = String(id)
             parameters["field"] = kinopoiskAPI.fieldID
-            print(parameters)
         }
-    
-        AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default)
-            .validate(statusCode: 200..<300)
-            .validate(contentType: ["application/json"])
-            .responseData { response in
-                switch response.result {
-                case .success:
-                    print("Validation Successful")
-                case let .failure(error):
-                    self.delegate?.showAlert(message: error.errorDescription?.description)
-                }
-            }
-            .responseDecodable(of: Films.self) { (response) in
-                debugPrint(response)
-                guard let films = response.value?.all else { return }
-                if films.count == 0 {
-                    print("No films found!")
-                    self.delegate?.showAlert(message: nil)
-                }
-                completion(films)
-       }
     }
 }
 
