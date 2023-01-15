@@ -1,5 +1,5 @@
 //
-//  Binder.swift
+//  Box.swift
 //  Kinopoisk
 //
 //  Created by Mikhail Bagmet on 02.01.2023.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-final class Binder<T> {
-    typealias Listener = (T) -> Void
+final class Box<T> {
+    typealias Listener = (T) -> ()
     
     // MARK: - Properties
     
@@ -28,8 +28,8 @@ final class Binder<T> {
     
     // MARK: - Methods
     
-    func bind(_ listener: Listener?) {
+    func bind(listener: @escaping Listener) {
         self.listener = listener
-        listener?(value)
+        listener(value)
     }
 }

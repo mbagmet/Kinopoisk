@@ -31,8 +31,8 @@ class FilmsListCoordinator: Coordinator, FilmsListFlow {
         navigationController.pushViewController(filmsListViewController, animated: true)
     }
     
-    func coordinateToFilmDetail() {
-        let filmDetailCoordinator = FilmDetailCoordinator(navigationController: navigationController)
+    func coordinateToFilmDetail(viewModel: FilmDetailViewModelType?) {
+        let filmDetailCoordinator = FilmDetailCoordinator(navigationController: navigationController, viewModel: viewModel)
         coordinate(to: filmDetailCoordinator)
     }
 }

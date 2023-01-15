@@ -15,7 +15,6 @@ class FilmsTableViewCellViewModel: FilmsTableViewCellViewModelType {
 
     // MARK: - Properties
     
-    //static var poster: UIImage?
     var filmTitle: String? {
         return film.name ?? film.names.first?.name
     }
@@ -36,7 +35,7 @@ class FilmsTableViewCellViewModel: FilmsTableViewCellViewModelType {
         self.film = film
     }
     
-    // MARK: - Private methods
+    // MARK: - Methods
     
     func getImage(for imageView: UIImageView?) {
         film.poster?.getImage(size: .small, completion: { data in

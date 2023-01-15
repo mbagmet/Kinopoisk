@@ -11,7 +11,7 @@ import Foundation
 
 struct Film: Decodable {
     //let externalID: ExternalID
-    //let logo: Logo
+    let logo: Poster?
     let poster: Poster?
     let backdrop: Poster?
     let rating: Rating
@@ -57,7 +57,7 @@ struct Film: Decodable {
     
     enum CodingKeys: String, CodingKey {
         //case externalID = "eternalId"
-        case poster, backdrop, rating, votes, videos, budget, fees, distributors, premiere, images, watchability, /*collections, updateDates, status,*/ productionCompanies, spokenLanguages, id, type, name, description, year, facts, genres, countries, seasonsInfo, persons, lists, typeNumber, alternativeName, enName, movieLength, names, updatedAt
+        case logo, poster, backdrop, rating, votes, videos, budget, fees, distributors, premiere, images, watchability, /*collections, updateDates, status,*/ productionCompanies, spokenLanguages, id, type, name, description, year, facts, genres, countries, seasonsInfo, persons, lists, typeNumber, alternativeName, enName, movieLength, names, updatedAt
         case ratingMPAA = "ratingMpaa"
         case shortDescription, technology, ticketsOnSale, sequelsAndPrequels, similarMovies, imagesInfo, ageRating, top10, top250, createDate, releaseYears
     }
@@ -79,44 +79,31 @@ extension Film {
     }
 
     // MARK: - Logo
-    struct Logo: Decodable {
-        let id: String
-        let url: String?
-
-        enum CodingKeys: String, CodingKey {
-            case id = "_id"
-            case url
-        }
-    }
+//    struct Logo: Decodable {
+//        let id: String
+//        let url: String?
+//
+//        enum CodingKeys: String, CodingKey {
+//            case id = "_id"
+//            case url
+//        }
+//    }
 
     // MARK: - Name
     struct Name: Decodable {
-        let id: String
         let name: String
-
-        enum CodingKeys: String, CodingKey {
-            case id = "_id"
-            case name
-        }
     }
 
     // MARK: - Poster
     struct Poster: Decodable {
-        let id: String
-        let url: String
-        let previewURL: String
-
-        enum CodingKeys: String, CodingKey {
-            case id = "_id"
-            case url
-            case previewURL = "previewUrl"
-        }
+        let url: String?
+        let previewURL: String?
         
-        func getImage(size: ImageSize, queue: DispatchQueue = DispatchQueue.global(qos: .utility), completion: @escaping (Data?) -> ()) {
+        func getImage(size: ImageSize = .big, queue: DispatchQueue = DispatchQueue.global(qos: .utility), completion: @escaping (Data?) -> ()) {
             var data: Data?
             
             let workItem = DispatchWorkItem {
-                guard let imageURL = URL(string: "\(size == .small ? previewURL : url)"),
+                guard let imageURL = URL(string: "\(size == .small ? previewURL ?? "" : url ?? "")"),
                       let imageData = try? Data(contentsOf: imageURL)
                 else { return }
                 data = imageData
@@ -133,18 +120,21 @@ extension Film {
             case small
             case big
         }
+        
+        enum CodingKeys: String, CodingKey {
+            case url
+            case previewURL = "previewUrl"
+        }
     }
 
     // MARK: - Rating
     struct Rating: Codable {
         let kp, imdb, filmCritics, russianFilmCritics: Double
         let ratingAwait: Double
-        let id: String
 
         enum CodingKeys: String, CodingKey {
             case kp, imdb, filmCritics, russianFilmCritics
             case ratingAwait = "await"
-            case id = "_id"
         }
     }
 
@@ -158,97 +148,64 @@ extension Film {
     
     // MARK: - Videos
     struct Videos: Decodable {
-        let id: String
-        let trailers: [Trailer]
-        let teasers: [JSONAny]
-
-        enum CodingKeys: String, CodingKey {
-            case id = "_id"
-            case trailers, teasers
-        }
+        let trailers: [Trailer]?
+        let teasers: [JSONAny]?
     }
     
     // MARK: - Trailer
     struct Trailer: Decodable {
-        let url: String
-        let name, site, type, id: String
-
-        enum CodingKeys: String, CodingKey {
-            case url, name, site, type
-            case id = "_id"
-        }
+        let url: String?
+        let name, site, type: String?
     }
     
     // MARK: - Budget
     struct Budget: Decodable {
-        let id: String
-        let value: Int
-        let currency: String
-
-        enum CodingKeys: String, CodingKey {
-            case id = "_id"
-            case value, currency
-        }
+        let value: Int?
+        let currency: String?
     }
     
     // MARK: - Fees
     struct Fees: Decodable {
-        let world, russia, usa: Budget
-        let id: String
-
-        enum CodingKeys: String, CodingKey {
-            case world, russia, usa
-            case id = "_id"
-        }
+        let world, russia, usa: Budget?
     }
     
     // MARK: - Distributors
     struct Distributors: Decodable {
-        let distributor, distributorRelease: String
+        let distributor, distributorRelease: String?
     }
     
     // MARK: - Premiere
     struct Premiere: Decodable {
-        let id, country, world, russia: String
-        let cinema, dvd, bluray: String
-
-        enum CodingKeys: String, CodingKey {
-            case id = "_id"
-            case country, world, russia, cinema, dvd, bluray
-        }
+        let country, world, russia: String?
+        let cinema, dvd, bluray: String?
     }
     
     // MARK: - Images
     struct Images: Decodable {
-        let postersCount, backdropsCount, framesCount: Int
+        let postersCount, backdropsCount, framesCount: Int?
     }
     
     // MARK: - ImagesInfo
     struct ImagesInfo: Codable {
-        let id: String
-        let framesCount: Int
-
-        enum CodingKeys: String, CodingKey {
-            case id = "_id"
-            case framesCount
-        }
+        let framesCount: Int?
     }
 
     // MARK: - Watchability
     struct Watchability: Decodable {
-        let id: String
         let items: [Item]?
-
-        enum CodingKeys: String, CodingKey {
-            case id = "_id"
-            case items
-        }
+    }
+    
+    // MARK: - Item
+    struct Item: Decodable {
+        let logo: Poster?
+        let name: String?
+        let url: String?
     }
     
     // MARK: - ProductionCompany
     struct ProductionCompany: Decodable {
-        let name: String
-        let url, previewURL: String
+        let name: String?
+        let url, previewURL: String?
 
         enum CodingKeys: String, CodingKey {
             case name, url
@@ -258,34 +215,28 @@ extension Film {
     
     // MARK: - SpokenLanguage
     struct SpokenLanguage: Decodable {
-        let name, nameEn: String
+        let name, nameEn: String?
     }
     
     // MARK: - Fact
     struct Fact: Decodable {
-        let value: String
-        let type: TypeEnum
-        let spoiler: Bool
-    }
-
-    enum TypeEnum: String, Decodable {
-        case fact = "FACT"
+        let value: String?
+        let spoiler: Bool?
     }
     
     // MARK: - Country
     struct Country: Decodable {
-        let name: String
+        let name: String?
     }
     
     // MARK: - Person
-    struct Person: Codable {
-        let id: Int
-        let photo: String
+    struct Person: Decodable {
+        let photo: String?
         let name, enName: String?
-        let enProfession: EnProfession
+        let enProfession: Profession?
     }
 
-    enum EnProfession: String, Codable {
+    enum Profession: String, Decodable {
         case actor = "actor"
         case composer = "composer"
         case designer = "designer"
@@ -298,35 +249,16 @@ extension Film {
     }
     
     // MARK: - Technology
-    struct Technology: Codable {
-        let id: String
-        let hasImax, has3D: Bool
-
-        enum CodingKeys: String, CodingKey {
-            case id = "_id"
-            case hasImax, has3D
-        }
+    struct Technology: Decodable {
+        let hasImax, has3D: Bool?
     }
     
     // MARK: - SequelsAndPrequel
-    struct SequelsAndPrequel: Codable {
-        let id: String
+    struct SequelsAndPrequel: Decodable {
+        let id: String?
 
         enum CodingKeys: String, CodingKey {
             case id = "_id"
-        }
-    }
-
-    // MARK: - Item
-    struct Item: Decodable {
-        let logo: Logo
-        let id, name: String
-        let url: String
-
-        enum CodingKeys: String, CodingKey {
-            case logo
-            case id = "_id"
-            case name, url
         }
     }
 }
