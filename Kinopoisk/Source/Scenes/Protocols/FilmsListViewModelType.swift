@@ -10,8 +10,9 @@ import Foundation
 protocol FilmsListViewModelType {
     
     var model: [Film]? { get }
+    var films: Box<[Film]?> { get }
     
-    // MARK: Fetching data from model
+    // MARK: Fetching data
     func fetchMovies(completion: @escaping() -> ())
     
     // MARK: For table rows

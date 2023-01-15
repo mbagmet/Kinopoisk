@@ -27,7 +27,7 @@ class FilmsListViewController: UIViewController {
         // MARK: ViewModel configuration
         viewModel?.fetchMovies { [weak self] in
             DispatchQueue.main.async {
-                self?.filmsTableView.reloadData()
+                self?.bindViewModel()
             }
         }
         
@@ -40,6 +40,9 @@ class FilmsListViewController: UIViewController {
         setupDataSource()
         setupDelegate()
         setupTableCells()
+        
+        // MARK: Search setup
+        setupSearch()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,6 +50,8 @@ class FilmsListViewController: UIViewController {
         // MARK: Navigation
         setupNavigation()
     }
+    
+    private lazy var searchController = FilmsSearchViewController(viewModelDelegate: viewModel as? FilmsSearchViewModelDelegate)
     
     // MARK: - Settings
     
@@ -77,6 +82,17 @@ class FilmsListViewController: UIViewController {
     }
 }
 
+// MARK: - Binding
+extension FilmsListViewController {
+    private func bindViewModel() {
+        viewModel?.films.bind(listener: { films in
+            DispatchQueue.main.async {
+                self.filmsTableView.reloadData()
+            }
+        })
+    }
+}
+
 // MARK: - Navigation
 extension FilmsListViewController {
     private func setupNavigation() {
@@ -85,8 +101,8 @@ extension FilmsListViewController {
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithDefaultBackground()
-
         navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.tintColor = .darkText
     }
 }
 
@@ -126,6 +142,15 @@ extension FilmsListViewController: UITableViewDelegate {
         viewModel.selectRow(atIndexPath: indexPath)
         
         coordinator?.coordinateToFilmDetail(viewModel: viewModel.makeDetailViewModel())
+    }
+}
+
+// MARK: - Search
+
+extension FilmsListViewController {
+    private func setupSearch() {
+        navigationItem.searchController = searchController
+        searchController.searchBar.delegate = searchController
     }
 }
 

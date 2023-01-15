@@ -17,6 +17,7 @@
 		D9580285296469E9002C7D09 /* Films.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9580284296469E9002C7D09 /* Films.swift */; };
 		D9598BD92971EC5F007B262B /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9598BD82971EC5F007B262B /* UIImageView+Extension.swift */; };
 		D9598BDB2971F7AA007B262B /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9598BDA2971F7AA007B262B /* UILabel+Extension.swift */; };
+		D96678312974497E00C0C63B /* FilmsSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96678302974497E00C0C63B /* FilmsSearchViewController.swift */; };
 		D9709FE3296B520D00D7CD4C /* FilmDetailViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9709FE2296B520D00D7CD4C /* FilmDetailViewModelType.swift */; };
 		D9719B2929632A5700E43E5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9719B2829632A5700E43E5D /* AppDelegate.swift */; };
 		D9719B2B29632A5700E43E5D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9719B2A29632A5700E43E5D /* SceneDelegate.swift */; };
@@ -33,6 +34,9 @@
 		D9719B5A29634BCE00E43E5D /* FilmDetailFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9719B5929634BCE00E43E5D /* FilmDetailFlow.swift */; };
 		D9719B5C29634C6500E43E5D /* FilmDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9719B5B29634C6500E43E5D /* FilmDetailViewController.swift */; };
 		D9719B5E29634CA200E43E5D /* FilmDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9719B5D29634CA200E43E5D /* FilmDetailViewModel.swift */; };
+		D9B3C5842974551500697826 /* FilmsSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B3C5832974551500697826 /* FilmsSearchViewModel.swift */; };
+		D9B3C5862974564300697826 /* FilmsSearchViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B3C5852974564300697826 /* FilmsSearchViewModelType.swift */; };
+		D9B3C588297460F300697826 /* FilmsSearchViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B3C587297460F300697826 /* FilmsSearchViewModelDelegate.swift */; };
 		D9CDF446296846A000728ECC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D9CDF445296846A000728ECC /* SnapKit */; };
 		D9CDF4492968475F00728ECC /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CDF4482968475F00728ECC /* UIColor+Extension.swift */; };
 		D9CDF44B2968494000728ECC /* FilmsListViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CDF44A2968494000728ECC /* FilmsListViewModelType.swift */; };
@@ -51,6 +55,7 @@
 		D9580284296469E9002C7D09 /* Films.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Films.swift; sourceTree = "<group>"; };
 		D9598BD82971EC5F007B262B /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		D9598BDA2971F7AA007B262B /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
+		D96678302974497E00C0C63B /* FilmsSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsSearchViewController.swift; sourceTree = "<group>"; };
 		D9709FE2296B520D00D7CD4C /* FilmDetailViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmDetailViewModelType.swift; sourceTree = "<group>"; };
 		D9719B2529632A5700E43E5D /* Kinopoisk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kinopoisk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9719B2829632A5700E43E5D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +74,9 @@
 		D9719B5929634BCE00E43E5D /* FilmDetailFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmDetailFlow.swift; sourceTree = "<group>"; };
 		D9719B5B29634C6500E43E5D /* FilmDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmDetailViewController.swift; sourceTree = "<group>"; };
 		D9719B5D29634CA200E43E5D /* FilmDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmDetailViewModel.swift; sourceTree = "<group>"; };
+		D9B3C5832974551500697826 /* FilmsSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsSearchViewModel.swift; sourceTree = "<group>"; };
+		D9B3C5852974564300697826 /* FilmsSearchViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsSearchViewModelType.swift; sourceTree = "<group>"; };
+		D9B3C587297460F300697826 /* FilmsSearchViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsSearchViewModelDelegate.swift; sourceTree = "<group>"; };
 		D9CDF4482968475F00728ECC /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		D9CDF44A2968494000728ECC /* FilmsListViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsListViewModelType.swift; sourceTree = "<group>"; };
 		D9CDF44C296849E000728ECC /* FilmsTableViewCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsTableViewCellViewModelType.swift; sourceTree = "<group>"; };
@@ -112,6 +120,8 @@
 				D9CDF44A2968494000728ECC /* FilmsListViewModelType.swift */,
 				D9CDF44C296849E000728ECC /* FilmsTableViewCellViewModelType.swift */,
 				D9709FE2296B520D00D7CD4C /* FilmDetailViewModelType.swift */,
+				D9B3C5852974564300697826 /* FilmsSearchViewModelType.swift */,
+				D9B3C587297460F300697826 /* FilmsSearchViewModelDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -217,6 +227,7 @@
 			children = (
 				D9719B2C29632A5700E43E5D /* FilmsListViewController.swift */,
 				D9CDF4502968751900728ECC /* FilmsListTableViewCell.swift */,
+				D96678302974497E00C0C63B /* FilmsSearchViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -226,6 +237,7 @@
 			children = (
 				D9719B4C2963475300E43E5D /* FilmsListViewModel.swift */,
 				D9CDF4522968872C00728ECC /* FilmsTableViewCellViewModel.swift */,
+				D9B3C5832974551500697826 /* FilmsSearchViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -374,6 +386,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D944E65A29702D7500165EE9 /* CommonMetrics.swift in Sources */,
+				D9B3C5862974564300697826 /* FilmsSearchViewModelType.swift in Sources */,
 				D9CDF44B2968494000728ECC /* FilmsListViewModelType.swift in Sources */,
 				D9709FE3296B520D00D7CD4C /* FilmDetailViewModelType.swift in Sources */,
 				D958027F2964540C002C7D09 /* NetworkManagerDelegate.swift in Sources */,
@@ -381,6 +394,7 @@
 				D9719B4F2963486E00E43E5D /* AppCoordinator.swift in Sources */,
 				D9719B4D2963475300E43E5D /* FilmsListViewModel.swift in Sources */,
 				D9CDF4512968751900728ECC /* FilmsListTableViewCell.swift in Sources */,
+				D9B3C588297460F300697826 /* FilmsSearchViewModelDelegate.swift in Sources */,
 				D9CDF44D296849E000728ECC /* FilmsTableViewCellViewModelType.swift in Sources */,
 				D944E65729702A1500165EE9 /* UIStackView+Extension.swift in Sources */,
 				D9CDF4492968475F00728ECC /* UIColor+Extension.swift in Sources */,
@@ -398,8 +412,10 @@
 				D9580285296469E9002C7D09 /* Films.swift in Sources */,
 				D9719B52296348C900E43E5D /* Coordinator.swift in Sources */,
 				D9598BDB2971F7AA007B262B /* UILabel+Extension.swift in Sources */,
+				D96678312974497E00C0C63B /* FilmsSearchViewController.swift in Sources */,
 				D95802832964669F002C7D09 /* Film.swift in Sources */,
 				D9719B582963498D00E43E5D /* FilmsListFlow.swift in Sources */,
+				D9B3C5842974551500697826 /* FilmsSearchViewModel.swift in Sources */,
 				D9719B5A29634BCE00E43E5D /* FilmDetailFlow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

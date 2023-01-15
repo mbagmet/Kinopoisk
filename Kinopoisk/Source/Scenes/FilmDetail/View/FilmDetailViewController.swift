@@ -230,10 +230,10 @@ extension FilmDetailViewController {
     private func setupNavigation() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
-
         navigationController?.navigationBar.standardAppearance = appearance
-        navigationItem.largeTitleDisplayMode = .never
+        
         navigationController?.navigationBar.tintColor = .white
+        navigationItem.largeTitleDisplayMode = .never
     }
 }
 
