@@ -22,7 +22,7 @@ class FilmsSearchViewController: UISearchController {
     
     // MARK: - Init
     
-    init(viewModelDelegate: FilmsSearchViewModelDelegate?) {
+    init(viewModelDelegate: FilmsSearchViewModelDelegate?, errorHandlingDelegate: FilmsErrorHandlingDelegate?) {
         super.init(searchResultsController: nil)
         
         // MARK: Configuration
@@ -31,6 +31,7 @@ class FilmsSearchViewController: UISearchController {
         // MARK: ViewModel configuration
         viewModel = FilmsSearchViewModel()
         viewModel?.delegate = viewModelDelegate
+        viewModel?.errorHandlingDelegate = errorHandlingDelegate
     }
     
     required init?(coder: NSCoder) {
@@ -47,7 +48,6 @@ extension FilmsSearchViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
         viewModel?.getFilmsListFromModel()
     }
     

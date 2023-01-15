@@ -51,7 +51,8 @@ class FilmsListViewController: UIViewController {
         setupNavigation()
     }
     
-    private lazy var searchController = FilmsSearchViewController(viewModelDelegate: viewModel as? FilmsSearchViewModelDelegate)
+    private lazy var searchController = FilmsSearchViewController(viewModelDelegate: viewModel as? FilmsSearchViewModelDelegate,
+                                                                  errorHandlingDelegate: self)
     
     // MARK: - Settings
     
@@ -75,6 +76,7 @@ class FilmsListViewController: UIViewController {
 
     private func setupDelegate() {
         filmsTableView.delegate = self
+        viewModel?.errorHandlingDelegate = self
     }
     
     private func setupTableCells() {
@@ -154,6 +156,18 @@ extension FilmsListViewController {
     }
 }
 
+// MARK: - FilmsListViewModel Delegate
+
+extension FilmsListViewController: FilmsErrorHandlingDelegate{
+    func showAlert(message: String?) {
+        let alert = UIAlertController(title: CommonStrings.failureMessageTitle, message: message, preferredStyle: .alert)
+        let button = UIAlertAction(title: CommonStrings.dismissButtonTitle, style: .default, handler: nil)
+        alert.addAction(button)
+        
+        present(alert, animated: true)
+    }
+}
+
 // MARK: - Constants
 extension FilmsListViewController {
     enum Metric {
@@ -163,9 +177,5 @@ extension FilmsListViewController {
     enum Strings {
         static let searchBarPlaceholder = "Поиск по названию фильма"
         static let navigationTitle = "Фильмы"
-        
-        static let errorAlertTitle = "Ошибка"
-        static let errorAlertText = "По вашему запросу ничего не найдено. Попробуйте ввести другой запрос."
-        static let errorAlertButtonTitle = "OK"
     }
 }

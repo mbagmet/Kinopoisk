@@ -11,6 +11,7 @@ protocol FilmsListViewModelType {
     
     var model: [Film]? { get }
     var films: Box<[Film]?> { get }
+    var errorHandlingDelegate: FilmsErrorHandlingDelegate? { get set }
     
     // MARK: Fetching data
     func fetchMovies(completion: @escaping() -> ())

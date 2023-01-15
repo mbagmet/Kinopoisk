@@ -9,6 +9,10 @@ import Foundation
 
 class FilmsListViewModel: FilmsListViewModelType {
     
+    // MARK: - Delegate
+    
+    weak var errorHandlingDelegate: FilmsErrorHandlingDelegate?
+    
     // MARK: - Properties
     
     var model: [Film]?
@@ -20,7 +24,7 @@ class FilmsListViewModel: FilmsListViewModelType {
     // MARK: - Initializers
     
     init() {
-        print("FilmsListViewModel initialized")
+        networkManager.delegate = self
     }
     
     // MARK: - Methods
@@ -63,5 +67,13 @@ extension FilmsListViewModel: FilmsSearchViewModelDelegate {
     
     func resetModel() {
         films.value = model
+    }
+}
+
+// MARK: - NetworkManagerErrorHandlerDelegate
+
+extension FilmsListViewModel: NetworkManagerErrorHandlerDelegate {
+    func handleErrorMessage(message: String?) {
+        errorHandlingDelegate?.showAlert(message: message)
     }
 }

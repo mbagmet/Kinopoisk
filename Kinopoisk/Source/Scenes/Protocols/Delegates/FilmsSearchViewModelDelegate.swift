@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol FilmsSearchViewModelDelegate {
+protocol FilmsSearchViewModelDelegate: AnyObject {
     func updateModel(with searchResults: [Film]?)
     func resetModel()
 }

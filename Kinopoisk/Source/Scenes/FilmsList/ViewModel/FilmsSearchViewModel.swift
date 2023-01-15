@@ -9,17 +9,21 @@ import Foundation
 
 class FilmsSearchViewModel: FilmsSearchViewModelType {
     
+    // MARK: - Delegate
+    
+    weak var errorHandlingDelegate: FilmsErrorHandlingDelegate?
+    weak var delegate: FilmsSearchViewModelDelegate?
+    
     // MARK: - Properties
 
     var model: [Film]?
-    var delegate: FilmsSearchViewModelDelegate?
 
     private let networkManager = NetworkManager()
     
     // MARK: - Initializers
     
     init() {
-        print("FilmsSearchViewModel initialized")
+        networkManager.delegate = self
     }
 
     // MARK: - Methods
@@ -37,5 +41,13 @@ class FilmsSearchViewModel: FilmsSearchViewModelType {
     
     func getFilmsListFromModel() {
         delegate?.resetModel()
+    }
+}
+
+// MARK: - NetworkManagerErrorHandlerDelegate
+
+extension FilmsSearchViewModel: NetworkManagerErrorHandlerDelegate {
+    func handleErrorMessage(message: String?) {
+        errorHandlingDelegate?.showAlert(message: message)
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 protocol FilmsSearchViewModelType: AnyObject {
     var model: [Film]? { get }
     var delegate: FilmsSearchViewModelDelegate? { get set }
+    var errorHandlingDelegate: FilmsErrorHandlingDelegate? { get set }
     
     // MARK: Fetching data
     func fetchMovies(filmName: String?, completion: @escaping() -> ())
