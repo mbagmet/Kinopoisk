@@ -38,10 +38,10 @@ class FilmsListTableViewCell: UITableViewCell {
     private lazy var textStackView = UIStackView.createStackView(axis: .vertical, distribution: .equalSpacing, alignment: .leading)
     
     // MARK: Labels
-    private lazy var titleLabel = UILabel.createLabel(fontWeight: .bold, fontSize: Metric.titleFontSize, numberOfLines: Metric.titleNumberOfLines)
-    private lazy var alternativeTitleLabel = UILabel.createLabel(fontWeight: .regular, textColor: .secondaryLabel)
-    private lazy var yearLabel = UILabel.createLabel(fontWeight: .regular, textColor: .secondaryLabel)
-    private lazy var ratingLabel = UILabel.createLabel(fontWeight: .bold, textColor: .white)
+    private lazy var titleLabel = UILabel.createLabel(fontWeight: .bold, numberOfLines: CommonMetrics.titleNumberOfLines)
+    private lazy var alternativeTitleLabel = UILabel.createLabel(fontWeight: .regular, fontSize: Metric.fontSize, textColor: .secondaryLabel)
+    private lazy var yearLabel = UILabel.createLabel(fontWeight: .regular, fontSize: Metric.fontSize, textColor: .secondaryLabel)
+    private lazy var ratingLabel = UILabel.createLabel(fontWeight: .bold, fontSize: Metric.fontSize, textColor: .white)
     
     // MARK: Auxiliary views
     private lazy var ratingView: UIView = {
@@ -125,7 +125,6 @@ extension FilmsListTableViewCell {
         static let ratingWidth: CGFloat = 32
         static let ratingCornerRadius: CGFloat = 3
         
-        static let titleFontSize: CGFloat = 16
-        static let titleNumberOfLines: Int = 2
+        static let fontSize: CGFloat = 14
     }
 }

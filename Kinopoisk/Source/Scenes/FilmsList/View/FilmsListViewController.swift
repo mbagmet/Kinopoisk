@@ -24,9 +24,6 @@ class FilmsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // MARK: Navigation
-        setupNavigation()
-        
         // MARK: ViewModel configuration
         viewModel?.fetchMovies { [weak self] in
             DispatchQueue.main.async {
@@ -43,6 +40,12 @@ class FilmsListViewController: UIViewController {
         setupDataSource()
         setupDelegate()
         setupTableCells()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        // MARK: Navigation
+        setupNavigation()
     }
     
     // MARK: - Settings
@@ -78,7 +81,12 @@ class FilmsListViewController: UIViewController {
 extension FilmsListViewController {
     private func setupNavigation() {
         navigationItem.title = Strings.navigationTitle
-        self.navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+
+        navigationController?.navigationBar.standardAppearance = appearance
     }
 }
 
