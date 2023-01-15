@@ -37,14 +37,20 @@ class FilmsSearchViewController: UISearchController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Private Methods
+    private func getFilmsFromSearchResult(filmName: String) {
+        viewModel?.fetchMovies(filmName: filmName, completion: {
+            self.viewModel?.updateFilmsListModel()
+        })
+    }
 }
 
 extension FilmsSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let filmName = searchBar.text else { return }
-        viewModel?.fetchMovies(filmName: filmName, completion: {
-            self.viewModel?.updateFilmsListModel()
-        })
+        
+        getFilmsFromSearchResult(filmName: filmName)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -52,8 +58,13 @@ extension FilmsSearchViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard searchBar.text == "" else { return }
-        viewModel?.getFilmsListFromModel()
+        guard let filmName = searchBar.text else { return }
+        
+        if filmName  == "" {
+            viewModel?.getFilmsListFromModel()
+        } else if filmName.count > 4 {
+            getFilmsFromSearchResult(filmName: filmName)
+        }
     }
 }
 
