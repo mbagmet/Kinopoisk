@@ -8,11 +8,11 @@
 import Alamofire
 import Foundation
 
-class NetworkManager: NetworkManagerErrorHandler {
+class NetworkManager {
     
     // MARK: - Properties
     
-    var delegate: NetworkManagerDelegate?
+    var delegate: NetworkManagerErrorHandlerDelegate?
     
     private var url: String { "\(kinopoiskAPI.domain)/\(kinopoiskSections.movie)" }
     private var parameters = ["token": kinopoiskAPI.token,
@@ -35,8 +35,7 @@ class NetworkManager: NetworkManagerErrorHandler {
 //                debugPrint(response)
                 guard let films = response.value?.all else { return }
                 if films.count == 0 {
-                    print("No films found!")
-                    self.delegate?.showAlert(message: nil)
+                    self.delegate?.handleErrorMessage(message: CommonStrings.failureMessageText)
                 }
                 completion(films)
             }
@@ -65,7 +64,7 @@ class NetworkManager: NetworkManagerErrorHandler {
         case .success:
             print("Validation Successful")
         case let .failure(error):
-            self.delegate?.showAlert(message: error.errorDescription?.description)
+            self.delegate?.handleErrorMessage(message: error.errorDescription?.description)
         }
     }
     

@@ -24,8 +24,5 @@ class AppCoordinator: Coordinator {
     func start() {
         let filmsListCoordinator = FilmsListCoordinator(navigationController: navigationController)
         coordinate(to: filmsListCoordinator)
-        
-//        let filmDetailCoordintor = FilmDetailCoordinator(navigationController: navigationController)
-//        coordinate(to: filmDetailCoordintor)
     }
 }

@@ -27,7 +27,7 @@ class FilmsListViewController: UIViewController {
         // MARK: ViewModel configuration
         viewModel?.fetchMovies { [weak self] in
             DispatchQueue.main.async {
-                self?.filmsTableView.reloadData()
+                self?.bindViewModel()
             }
         }
         
@@ -40,6 +40,9 @@ class FilmsListViewController: UIViewController {
         setupDataSource()
         setupDelegate()
         setupTableCells()
+        
+        // MARK: Search setup
+        setupSearch()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,6 +50,9 @@ class FilmsListViewController: UIViewController {
         // MARK: Navigation
         setupNavigation()
     }
+    
+    private lazy var searchController = FilmsSearchViewController(viewModelDelegate: viewModel as? FilmsSearchViewModelDelegate,
+                                                                  errorHandlingDelegate: self)
     
     // MARK: - Settings
     
@@ -70,10 +76,22 @@ class FilmsListViewController: UIViewController {
 
     private func setupDelegate() {
         filmsTableView.delegate = self
+        viewModel?.errorHandlingDelegate = self
     }
     
     private func setupTableCells() {
         filmsTableView.register(FilmsListTableViewCell.self, forCellReuseIdentifier: FilmsListTableViewCell.identifier)
+    }
+}
+
+// MARK: - Binding
+extension FilmsListViewController {
+    private func bindViewModel() {
+        viewModel?.films.bind(listener: { films in
+            DispatchQueue.main.async {
+                self.filmsTableView.reloadData()
+            }
+        })
     }
 }
 
@@ -85,8 +103,8 @@ extension FilmsListViewController {
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithDefaultBackground()
-
         navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.tintColor = .darkText
     }
 }
 
@@ -129,6 +147,27 @@ extension FilmsListViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - Search
+
+extension FilmsListViewController {
+    private func setupSearch() {
+        navigationItem.searchController = searchController
+        searchController.searchBar.delegate = searchController
+    }
+}
+
+// MARK: - FilmsListViewModel Delegate
+
+extension FilmsListViewController: FilmsErrorHandlingDelegate{
+    func showAlert(message: String?) {
+        let alert = UIAlertController(title: CommonStrings.failureMessageTitle, message: message, preferredStyle: .alert)
+        let button = UIAlertAction(title: CommonStrings.dismissButtonTitle, style: .default, handler: nil)
+        alert.addAction(button)
+        
+        present(alert, animated: true)
+    }
+}
+
 // MARK: - Constants
 extension FilmsListViewController {
     enum Metric {
@@ -138,9 +177,5 @@ extension FilmsListViewController {
     enum Strings {
         static let searchBarPlaceholder = "Поиск по названию фильма"
         static let navigationTitle = "Фильмы"
-        
-        static let errorAlertTitle = "Ошибка"
-        static let errorAlertText = "По вашему запросу ничего не найдено. Попробуйте ввести другой запрос."
-        static let errorAlertButtonTitle = "OK"
     }
 }
