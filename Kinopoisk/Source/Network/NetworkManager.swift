@@ -22,8 +22,8 @@ class NetworkManager {
 
     // MARK: - Methods
     
-    func fetchData(filmName: String? = nil, filmID: Int? = nil, completion: @escaping ([Film]) -> ()) {
-        addParametersToRequest(filmName: filmName)
+    func fetchData(filmName: String? = nil, page: Int? = nil, completion: @escaping ([Film], Int, Int) -> ()) {
+        addParametersToRequest(filmName: filmName, page: page)
     
         AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default)
             .validate(statusCode: 200..<300)
@@ -37,7 +37,11 @@ class NetworkManager {
                 if films.count == 0 {
                     self.delegate?.handleErrorMessage(message: CommonStrings.failureMessageText)
                 }
-                completion(films)
+                guard let page = response.value?.page,
+                      let totalPages = response.value?.pages
+                else { return }
+                
+                completion(films, page, totalPages)
             }
     }
     
@@ -68,7 +72,7 @@ class NetworkManager {
         }
     }
     
-    private func addParametersToRequest(filmName: String? = nil, filmID: Int? = nil) {
+    private func addParametersToRequest(filmName: String? = nil, filmID: Int? = nil, page: Int? = nil) {
         if let name = filmName {
             switch name {
             case "":
@@ -82,6 +86,9 @@ class NetworkManager {
         if let id = filmID {
             parameters["search"] = String(id)
             parameters["field"] = kinopoiskAPI.fieldID
+        }
+        if let page = page {
+            parameters["page"] = String(page)
         }
     }
 }

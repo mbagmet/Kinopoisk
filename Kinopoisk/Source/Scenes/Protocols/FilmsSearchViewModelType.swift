@@ -8,9 +8,13 @@
 import Foundation
 
 protocol FilmsSearchViewModelType: AnyObject {
-    var model: [Film]? { get }
+    
+    // MARK: Delegates
     var delegate: FilmsSearchViewModelDelegate? { get set }
     var errorHandlingDelegate: FilmsErrorHandlingDelegate? { get set }
+    
+    // MARK: Properties
+    var model: [Film]? { get }
     
     // MARK: Fetching data
     func fetchMovies(filmName: String?, completion: @escaping() -> ())

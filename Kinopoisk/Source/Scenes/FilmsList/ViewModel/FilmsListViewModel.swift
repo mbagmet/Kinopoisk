@@ -18,8 +18,13 @@ class FilmsListViewModel: FilmsListViewModelType {
     var model: [Film]?
     var films: Box<[Film]?> = Box(nil)
     
+    var isLoading = false
+    
     private var selectedIndexPath: IndexPath?
     private let networkManager = NetworkManager()
+    private var isSearching = false
+    private var currentPage: Int?
+    private var totalPages: Int?
     
     // MARK: - Initializers
     
@@ -29,10 +34,16 @@ class FilmsListViewModel: FilmsListViewModelType {
     
     // MARK: - Methods
     
-    func fetchMovies(completion: @escaping() -> ()) {
-        networkManager.fetchData(filmName: nil) { [weak self] movies in
-            self?.model = movies
-            self?.films.value = movies
+    func fetchMovies(page: Int? = nil, completion: @escaping() -> ()) {
+        networkManager.fetchData(page: page) { [weak self] movies, page, totalPages in
+            if self?.model != nil {
+                self?.model?.append(contentsOf: movies)
+            } else {
+                self?.model = movies
+            }
+            self?.films.value = self?.model
+            self?.currentPage = page
+            self?.totalPages = totalPages
             completion()
         }
     }
@@ -43,6 +54,9 @@ class FilmsListViewModel: FilmsListViewModelType {
     
     func makeCellViewModel(forIndexPath indexPath: IndexPath) -> FilmsTableViewCellViewModelType? {
         guard let film = films.value?[indexPath.row] else { return nil }
+        
+        checkIfEndOfPage(indexPath: indexPath)
+        
         return FilmsTableViewCellViewModel(film: film)
     }
     
@@ -56,6 +70,27 @@ class FilmsListViewModel: FilmsListViewModelType {
     func selectRow(atIndexPath indexPath: IndexPath) {
         self.selectedIndexPath = indexPath
     }
+    
+    // MARK: - Private Methods
+    
+    private func checkIfEndOfPage(indexPath: IndexPath) {
+        if indexPath.row == (films.value?.count ?? 0) - Metric.rowsBeloreFetch {
+            if !isSearching {
+                loadNextPage()
+            }
+        }
+    }
+    
+    private func loadNextPage() {
+        guard let currentPage = currentPage, let totalPages = totalPages else { return }
+        
+        if currentPage < totalPages && !isLoading {
+            isLoading = true
+            fetchMovies(page: currentPage + 1) {
+                self.isLoading = false
+            }
+        }
+    }
 }
 
 // MARK: - FilmsSearchViewModel Delegate
@@ -63,10 +98,12 @@ class FilmsListViewModel: FilmsListViewModelType {
 extension FilmsListViewModel: FilmsSearchViewModelDelegate {
     func updateModel(with searchResults: [Film]?) {
         films.value = searchResults
+        isSearching = true
     }
     
     func resetModel() {
         films.value = model
+        isSearching = false
     }
 }
 
@@ -75,5 +112,13 @@ extension FilmsListViewModel: FilmsSearchViewModelDelegate {
 extension FilmsListViewModel: NetworkManagerErrorHandlerDelegate {
     func handleErrorMessage(message: String?) {
         errorHandlingDelegate?.showAlert(message: message)
+    }
+}
+
+// MARK: - Constants
+
+extension FilmsListViewModel {
+    enum Metric {
+        static let rowsBeloreFetch = 10
     }
 }

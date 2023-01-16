@@ -62,7 +62,7 @@ extension FilmsSearchViewController: UISearchBarDelegate {
         
         if filmName  == "" {
             viewModel?.getFilmsListFromModel()
-        } else if filmName.count > 4 {
+        } else if filmName.count >= Metric.numberOfCharactersToStartSearch {
             getFilmsFromSearchResult(filmName: filmName)
         }
     }
@@ -70,11 +70,11 @@ extension FilmsSearchViewController: UISearchBarDelegate {
 
 // MARK: - Constants
 extension FilmsSearchViewController {
+    enum Metric {
+        static let numberOfCharactersToStartSearch = 5
+    }
+    
     enum Strings {
         static let searchBarPlaceholder = "Поиск по названию фильма"
-        
-        static let errorAlertTitle = "Ошибка"
-        static let errorAlertText = "По вашему запросу ничего не найдено. Попробуйте ввести другой запрос."
-        static let errorAlertButtonTitle = "OK"
     }
 }
