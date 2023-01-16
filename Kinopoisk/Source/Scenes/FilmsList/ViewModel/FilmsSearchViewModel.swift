@@ -29,7 +29,7 @@ class FilmsSearchViewModel: FilmsSearchViewModelType {
     // MARK: - Methods
 
     func fetchMovies(filmName: String?, completion: @escaping() -> ()) {
-        networkManager.fetchData(filmName: filmName) { [weak self] movies in
+        networkManager.fetchData(filmName: filmName) { [weak self] movies, page, totalPages  in
             self?.model = movies
             completion()
         }

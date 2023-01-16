@@ -301,8 +301,8 @@
 		D9B3C5892974A93B00697826 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
-				D9B3C58A2974A96200697826 /* FilmsErrorHandlingDelegate.swift */,
 				D9B3C587297460F300697826 /* FilmsSearchViewModelDelegate.swift */,
+				D9B3C58A2974A96200697826 /* FilmsErrorHandlingDelegate.swift */,
 			);
 			path = Delegates;
 			sourceTree = "<group>";

@@ -19,15 +19,19 @@ class FilmsListViewController: UIViewController {
 
     private lazy var filmsTableView = UITableView(frame: view.bounds, style: UITableView.Style.plain)
     
+    private lazy var searchController = FilmsSearchViewController(viewModelDelegate: viewModel as? FilmsSearchViewModelDelegate,
+                                                                  errorHandlingDelegate: self)
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // MARK: ViewModel configuration
-        viewModel?.fetchMovies { [weak self] in
+        viewModel?.fetchMovies(page: nil) { [weak self] in
             DispatchQueue.main.async {
                 self?.bindViewModel()
+                self?.viewModel?.isLoading = false
             }
         }
         
@@ -50,9 +54,6 @@ class FilmsListViewController: UIViewController {
         // MARK: Navigation
         setupNavigation()
     }
-    
-    private lazy var searchController = FilmsSearchViewController(viewModelDelegate: viewModel as? FilmsSearchViewModelDelegate,
-                                                                  errorHandlingDelegate: self)
     
     // MARK: - Settings
     

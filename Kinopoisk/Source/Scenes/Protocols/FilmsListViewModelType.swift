@@ -9,12 +9,16 @@ import Foundation
 
 protocol FilmsListViewModelType {
     
-    var model: [Film]? { get }
-    var films: Box<[Film]?> { get }
+    // MARK: Delegates
     var errorHandlingDelegate: FilmsErrorHandlingDelegate? { get set }
     
+    // MARK: Properties
+    var model: [Film]? { get }
+    var films: Box<[Film]?> { get }
+    var isLoading: Bool { get set }
+    
     // MARK: Fetching data
-    func fetchMovies(completion: @escaping() -> ())
+    func fetchMovies(page: Int?, completion: @escaping() -> ())
     
     // MARK: For table rows
     func numberOfRows() -> Int
