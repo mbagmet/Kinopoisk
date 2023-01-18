@@ -105,7 +105,10 @@ extension FilmsListViewController {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithDefaultBackground()
         navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.tintColor = .darkText
+        navigationController?.navigationBar.tintColor =  .darkText | .lightText
+        
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem.menuButton(self, action: #selector(presentFilter), image: UIImage(systemName: "slider.horizontal.3"))
     }
 }
 
@@ -143,6 +146,7 @@ extension FilmsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let viewModel = viewModel else { return }
         viewModel.selectRow(atIndexPath: indexPath)
+        tableView.deselectRow(at: indexPath, animated: true)
         
         coordinator?.coordinateToFilmDetail(viewModel: viewModel.makeDetailViewModel())
     }
@@ -154,6 +158,14 @@ extension FilmsListViewController {
     private func setupSearch() {
         navigationItem.searchController = searchController
         searchController.searchBar.delegate = searchController
+    }
+}
+
+// MARK: - User Actions
+
+extension FilmsListViewController {
+    @objc func presentFilter() {
+        coordinator?.coordinateToFilmFilter()
     }
 }
 

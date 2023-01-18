@@ -26,6 +26,8 @@ class FilmsListViewModel: FilmsListViewModelType {
     private var currentPage: Int?
     private var totalPages: Int?
     
+    var selectedFilmTypes: [Film.FilmType] = []
+    
     // MARK: - Initializers
     
     init() {
