@@ -8,21 +8,33 @@
 import Foundation
 
 class FilmsFilterViewModel: FilmsFilterViewModelType {
+    
+    // MARK: - DataCommunicator
+    
+    var dataCommunicator: DataCommunicator
+    var selectedFilmTypes: [Film.FilmType] = [] {
+        didSet {
+            dataCommunicator.update(data: selectedFilmTypes)
+        }
+    }
 
     // MARK: - Properties
     
     var filmType: [Film.FilmType: String]?
-    var selectedFilmTypes: [Film.FilmType] = []
+    //var selectedFilmTypes: [Film.FilmType] = []
+    
+    var selectedFilmTypesChanged: (([Film.FilmType]) -> Void)?
     
     private var keys: [Film.FilmType]?
     private var selectedIndexPath: IndexPath?
     
     // MARK: - Initializers
     
-    init() {
+    init(dataCommunicator: DataCommunicator, defaultData: [Film.FilmType]) {
+        self.dataCommunicator = dataCommunicator
+        self.selectedFilmTypes = defaultData
         self.filmType = generateFilterData()
         self.keys = filmType?.keys.sorted()
-        print("FilmsFilterViewModel initialzed")
     }
     
     // MARK: - Methods
@@ -35,8 +47,6 @@ class FilmsFilterViewModel: FilmsFilterViewModelType {
         guard let type = keys?[indexPath.row] else { return nil }
 
         let isSelected = selectedFilmTypes.contains(type) ? true : false
-
-        print("Make model for cell \(type), \(isSelected)")
         
         return FilmTypeFilterTableViewCellViewModel(filmTypeCase: type, isSelected: isSelected)
     }
@@ -56,7 +66,7 @@ class FilmsFilterViewModel: FilmsFilterViewModelType {
             selectedFilmTypes.remove(at: index)
         }
         
-        print(selectedFilmTypes)
+        print("FilmsFilterViewModel \(selectedFilmTypes)")
         completion()
     }
     

@@ -29,4 +29,7 @@ protocol FilmsListViewModelType {
     // MARK: For Detail
     func makeDetailViewModel() -> FilmDetailViewModelType?
     func selectRow(atIndexPath indexPath: IndexPath)
+    
+    // MARK: For Filter
+    func provideDefaultFilterData() -> [Film.FilmType]
 }

@@ -26,6 +26,8 @@
 		D9598BDB2971F7AA007B262B /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9598BDA2971F7AA007B262B /* UILabel+Extension.swift */; };
 		D95DE3E829792E0700036786 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DE3E729792E0700036786 /* Test.swift */; };
 		D95DE3EA29793CDA00036786 /* FilmsSearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DE3E929793CDA00036786 /* FilmsSearchCoordinator.swift */; };
+		D95DE3ED29796B2A00036786 /* DataCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DE3EC29796B2A00036786 /* DataCommunicator.swift */; };
+		D95DE3F02979B0E900036786 /* Communicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DE3EF2979B0E900036786 /* Communicator.swift */; };
 		D96678312974497E00C0C63B /* FilmsSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96678302974497E00C0C63B /* FilmsSearchViewController.swift */; };
 		D9709FE3296B520D00D7CD4C /* FilmDetailViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9709FE2296B520D00D7CD4C /* FilmDetailViewModelType.swift */; };
 		D9719B2929632A5700E43E5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9719B2829632A5700E43E5D /* AppDelegate.swift */; };
@@ -75,6 +77,8 @@
 		D9598BDA2971F7AA007B262B /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		D95DE3E729792E0700036786 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		D95DE3E929793CDA00036786 /* FilmsSearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsSearchCoordinator.swift; sourceTree = "<group>"; };
+		D95DE3EC29796B2A00036786 /* DataCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCommunicator.swift; sourceTree = "<group>"; };
+		D95DE3EF2979B0E900036786 /* Communicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Communicator.swift; sourceTree = "<group>"; };
 		D96678302974497E00C0C63B /* FilmsSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsSearchViewController.swift; sourceTree = "<group>"; };
 		D9709FE2296B520D00D7CD4C /* FilmDetailViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmDetailViewModelType.swift; sourceTree = "<group>"; };
 		D9719B2529632A5700E43E5D /* Kinopoisk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kinopoisk.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -177,6 +181,23 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		D95DE3EB29796AD100036786 /* DataCommunicator */ = {
+			isa = PBXGroup;
+			children = (
+				D95DE3EE2979B0D000036786 /* Protocols */,
+				D95DE3EC29796B2A00036786 /* DataCommunicator.swift */,
+			);
+			path = DataCommunicator;
+			sourceTree = "<group>";
+		};
+		D95DE3EE2979B0D000036786 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				D95DE3EF2979B0E900036786 /* Communicator.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		D9719B1C29632A5700E43E5D = {
 			isa = PBXGroup;
 			children = (
@@ -218,6 +239,7 @@
 				D95DE3E729792E0700036786 /* Test.swift */,
 				D9719B3E29633A9B00E43E5D /* App */,
 				D9719B482963467900E43E5D /* Coordinator */,
+				D95DE3EB29796AD100036786 /* DataCommunicator */,
 				D9719B4229633B4B00E43E5D /* Model */,
 				D9719B3F29633AA100E43E5D /* Scenes */,
 				D9719B472963460300E43E5D /* Network */,
@@ -450,6 +472,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D95DE3F02979B0E900036786 /* Communicator.swift in Sources */,
 				D944E65A29702D7500165EE9 /* CommonMetrics.swift in Sources */,
 				D95DE3EA29793CDA00036786 /* FilmsSearchCoordinator.swift in Sources */,
 				D9B3C5862974564300697826 /* FilmsSearchViewModelType.swift in Sources */,
@@ -470,6 +493,7 @@
 				D9719B5C29634C6500E43E5D /* FilmDetailViewController.swift in Sources */,
 				D95DE3E829792E0700036786 /* Test.swift in Sources */,
 				D9CDF4532968872C00728ECC /* FilmsTableViewCellViewModel.swift in Sources */,
+				D95DE3ED29796B2A00036786 /* DataCommunicator.swift in Sources */,
 				D93474662975BF9000CAC787 /* UIBarButtonItem+Extension.swift in Sources */,
 				D95802812964546D002C7D09 /* NetworkManager.swift in Sources */,
 				D9719B2D29632A5700E43E5D /* FilmsListViewController.swift in Sources */,

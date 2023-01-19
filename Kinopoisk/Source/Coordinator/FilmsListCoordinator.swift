@@ -12,14 +12,16 @@ class FilmsListCoordinator: Coordinator, FilmsListFlow {
     // MARK: - Properties
     
     var navigationController: UINavigationController
+    var dataCommunicator: DataCommunicator
     var viewModel: FilmsListViewModelType?
     var filmsListViewController: FilmsListViewController
     
     // MARK: - Initializers
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, dataCommunicator: DataCommunicator) {
         self.navigationController = navigationController
-        self.viewModel = FilmsListViewModel()
+        self.dataCommunicator = dataCommunicator
+        self.viewModel = FilmsListViewModel(dataCommunicator: dataCommunicator)
         self.filmsListViewController = FilmsListViewController()
     }
     
@@ -41,7 +43,9 @@ class FilmsListCoordinator: Coordinator, FilmsListFlow {
     }
     
     func coordinateToFilmFilter() {
-        let filmFilterCoordinator = FilmFilterCoordinator(navigationController: navigationController)
+        let filmFilterCoordinator = FilmFilterCoordinator(navigationController: navigationController,
+                                                          dataCommunicator: dataCommunicator,
+                                                          defaultData: viewModel?.provideDefaultFilterData())
         coordinate(to: filmFilterCoordinator)
     }
     
@@ -49,6 +53,7 @@ class FilmsListCoordinator: Coordinator, FilmsListFlow {
     
     private func coordinateToFilmSearch() -> FilmsSearchCoordinator {
         let filmsSearchCoordinator = FilmsSearchCoordinator(navigationController: navigationController,
+                                                            dataCommunicator: dataCommunicator,
                                                             viewModelDelegate: viewModel as? FilmsSearchViewModelDelegate,
                                                             errorHandlingDelegate: filmsListViewController)
         coordinate(to: filmsSearchCoordinator)

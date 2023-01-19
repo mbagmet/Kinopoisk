@@ -12,26 +12,31 @@ class FilmFilterCoordinator: Coordinator {
     // MARK: - Properties
     
     var navigationController: UINavigationController
+    var dataCommunicator: DataCommunicator
+    var defaultData: [Film.FilmType]
     
     // MARK: - Initializers
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, dataCommunicator: DataCommunicator, defaultData: [Film.FilmType]?) {
         self.navigationController = navigationController
+        self.dataCommunicator = dataCommunicator
+        self.defaultData = defaultData ?? []
     }
     
     // MARK: - Methods
     
     func start() {
         let filterViewController = FilmsFilterViewController()
-        let viewModel = FilmsFilterViewModel()
+        let viewModel = FilmsFilterViewModel(dataCommunicator: dataCommunicator, defaultData: defaultData)
         
         filterViewController.coordinator = self
         filterViewController.viewModel = viewModel
+        filterViewController.viewModel?.selectedFilmTypes = defaultData
         
         filterViewController.modalPresentationStyle = .popover
         if let popover = filterViewController.popoverPresentationController {
             let sheet = popover.adaptiveSheetPresentationController
-            sheet.detents = [.medium(), .large()]
+            sheet.detents = [.medium()]
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             sheet.prefersGrabberVisible = true
         }

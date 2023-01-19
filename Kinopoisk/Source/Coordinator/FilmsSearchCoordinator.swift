@@ -13,15 +13,21 @@ class FilmsSearchCoordinator: Coordinator {
     
     var navigationController: UINavigationController
     var searchViewController: FilmsSearchViewController
+    var dataCommunicator: DataCommunicator
     var viewModel: FilmsSearchViewModel?
     var viewModelDelegate: FilmsSearchViewModelDelegate?
     var errorHandlingDelegate: FilmsErrorHandlingDelegate?
     
     // MARK: - Initializers
     
-    init(navigationController: UINavigationController, viewModelDelegate: FilmsSearchViewModelDelegate?, errorHandlingDelegate: FilmsErrorHandlingDelegate) {
+    init(navigationController: UINavigationController,
+         dataCommunicator: DataCommunicator,
+         viewModelDelegate: FilmsSearchViewModelDelegate?,
+         errorHandlingDelegate: FilmsErrorHandlingDelegate) {
+        
         self.navigationController = navigationController
         self.searchViewController = FilmsSearchViewController()
+        self.dataCommunicator = dataCommunicator
         self.viewModelDelegate = viewModelDelegate
         self.errorHandlingDelegate = errorHandlingDelegate
     }
@@ -29,7 +35,7 @@ class FilmsSearchCoordinator: Coordinator {
     // MARK: - Methods
     
     func start() {
-        viewModel = FilmsSearchViewModel()
+        viewModel = FilmsSearchViewModel(dataCommunicator: dataCommunicator)
         
         searchViewController.viewModel = viewModel
         searchViewController.viewModel?.delegate = viewModelDelegate

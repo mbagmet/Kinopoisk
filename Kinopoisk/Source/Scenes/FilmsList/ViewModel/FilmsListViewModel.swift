@@ -9,6 +9,16 @@ import Foundation
 
 class FilmsListViewModel: FilmsListViewModelType {
     
+    // MARK: - DataCommunicator
+    
+    var dataCommunicator: DataCommunicator
+    
+    private var selectedFilmTypes: [Film.FilmType] = [] {
+        didSet {
+            print("FilmsListViewModel \(selectedFilmTypes)")
+        }
+    }
+    
     // MARK: - Delegate
     
     weak var errorHandlingDelegate: FilmsErrorHandlingDelegate?
@@ -26,12 +36,19 @@ class FilmsListViewModel: FilmsListViewModelType {
     private var currentPage: Int?
     private var totalPages: Int?
     
-    var selectedFilmTypes: [Film.FilmType] = []
-    
     // MARK: - Initializers
     
-    init() {
+    init(dataCommunicator: DataCommunicator) {
+        self.dataCommunicator = dataCommunicator
+        dataCommunicator.subscribe(subscriberId: "filmsListViewModel") { (selectedFilmTypes: [Film.FilmType]) in
+            self.selectedFilmTypes = selectedFilmTypes
+        }
+        
         networkManager.delegate = self
+    }
+    
+    deinit {
+        dataCommunicator.unsubscribe(subscriberId: "filmsListViewModel")
     }
     
     // MARK: - Methods
@@ -71,6 +88,10 @@ class FilmsListViewModel: FilmsListViewModelType {
     
     func selectRow(atIndexPath indexPath: IndexPath) {
         self.selectedIndexPath = indexPath
+    }
+    
+    func provideDefaultFilterData() -> [Film.FilmType] {
+        return selectedFilmTypes
     }
     
     // MARK: - Private Methods

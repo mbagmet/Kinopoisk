@@ -9,6 +9,16 @@ import Foundation
 
 class FilmsSearchViewModel: FilmsSearchViewModelType {
     
+    // MARK: - DataCommunicator
+    
+    var dataCommunicator: DataCommunicator
+    
+    private var selectedFilmTypes: [Film.FilmType] = [] {
+        didSet {
+            print("FilmsSearchViewModel \(selectedFilmTypes)")
+        }
+    }
+    
     // MARK: - Delegate
     
     weak var errorHandlingDelegate: FilmsErrorHandlingDelegate?
@@ -22,8 +32,17 @@ class FilmsSearchViewModel: FilmsSearchViewModelType {
     
     // MARK: - Initializers
     
-    init() {
+    init(dataCommunicator: DataCommunicator) {
+        self.dataCommunicator = dataCommunicator
+        dataCommunicator.subscribe(subscriberId: "filmsSearchViewModel") { (selectedFilmTypes: [Film.FilmType]) in
+            self.selectedFilmTypes = selectedFilmTypes
+        }
+        
         networkManager.delegate = self
+    }
+    
+    deinit {
+        dataCommunicator.unsubscribe(subscriberId: "filmsSearchViewModel")
     }
 
     // MARK: - Methods
