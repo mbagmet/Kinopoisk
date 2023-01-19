@@ -13,14 +13,12 @@ class FilmsListViewController: UIViewController {
     // MARK: - Properties
     
     var coordinator: FilmsListFlow?
+    var searchCoordinator: FilmsSearchCoordinator?
     var viewModel: FilmsListViewModelType?
     
     // MARK: - Views
 
     private lazy var filmsTableView = UITableView(frame: view.bounds, style: UITableView.Style.plain)
-    
-    private lazy var searchController = FilmsSearchViewController(viewModelDelegate: viewModel as? FilmsSearchViewModelDelegate,
-                                                                  errorHandlingDelegate: self)
     
     // MARK: - Lifecycle
 
@@ -44,9 +42,6 @@ class FilmsListViewController: UIViewController {
         setupDataSource()
         setupDelegate()
         setupTableCells()
-        
-        // MARK: Search setup
-        setupSearch()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -152,15 +147,6 @@ extension FilmsListViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - Search
-
-extension FilmsListViewController {
-    private func setupSearch() {
-        navigationItem.searchController = searchController
-        searchController.searchBar.delegate = searchController
-    }
-}
-
 // MARK: - User Actions
 
 extension FilmsListViewController {
@@ -188,7 +174,6 @@ extension FilmsListViewController {
     }
     
     enum Strings {
-        static let searchBarPlaceholder = "Поиск по названию фильма"
         static let navigationTitle = "Фильмы"
     }
 }

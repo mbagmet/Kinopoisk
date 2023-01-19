@@ -12,21 +12,25 @@ class FilmsListCoordinator: Coordinator, FilmsListFlow {
     // MARK: - Properties
     
     var navigationController: UINavigationController
+    var viewModel: FilmsListViewModelType?
+    var filmsListViewController: FilmsListViewController
     
     // MARK: - Initializers
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+        self.viewModel = FilmsListViewModel()
+        self.filmsListViewController = FilmsListViewController()
     }
     
     // MARK: - Methods
     
-    func start() {
-        let filmsListViewController = FilmsListViewController()
-        let viewModel = FilmsListViewModel()
-        
+    func start() {        
         filmsListViewController.coordinator = self
         filmsListViewController.viewModel = viewModel
+        filmsListViewController.searchCoordinator = coordinateToFilmSearch()
+        
+        filmsListViewController.navigationItem.searchController = filmsListViewController.searchCoordinator?.searchViewController
         
         navigationController.pushViewController(filmsListViewController, animated: true)
     }
@@ -39,5 +43,16 @@ class FilmsListCoordinator: Coordinator, FilmsListFlow {
     func coordinateToFilmFilter() {
         let filmFilterCoordinator = FilmFilterCoordinator(navigationController: navigationController)
         coordinate(to: filmFilterCoordinator)
+    }
+    
+    // MARK: - Private Methods
+    
+    private func coordinateToFilmSearch() -> FilmsSearchCoordinator {
+        let filmsSearchCoordinator = FilmsSearchCoordinator(navigationController: navigationController,
+                                                            viewModelDelegate: viewModel as? FilmsSearchViewModelDelegate,
+                                                            errorHandlingDelegate: filmsListViewController)
+        coordinate(to: filmsSearchCoordinator)
+        
+        return filmsSearchCoordinator
     }
 }

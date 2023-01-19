@@ -22,16 +22,11 @@ class FilmsSearchViewController: UISearchController {
     
     // MARK: - Init
     
-    init(viewModelDelegate: FilmsSearchViewModelDelegate?, errorHandlingDelegate: FilmsErrorHandlingDelegate?) {
+    init(/*viewModelDelegate: FilmsSearchViewModelDelegate?, errorHandlingDelegate: FilmsErrorHandlingDelegate?*/) {
         super.init(searchResultsController: nil)
         
         // MARK: Configuration
         self.searchBar.placeholder = Strings.searchBarPlaceholder
-        
-        // MARK: ViewModel configuration
-        viewModel = FilmsSearchViewModel()
-        viewModel?.delegate = viewModelDelegate
-        viewModel?.errorHandlingDelegate = errorHandlingDelegate
     }
     
     required init?(coder: NSCoder) {
