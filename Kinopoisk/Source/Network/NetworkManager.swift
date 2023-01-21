@@ -54,7 +54,7 @@ class NetworkManager {
     func fetchFilm(for filmID: Int?, completion: @escaping (Film) -> ()) {
         addParametersToRequest(filmID: filmID)
         
-        AF.request(url, method: .get, parameters: parameters, encoder: URLEncodedFormParameterEncoder(encoder: URLEncodedFormEncoder(arrayEncoding: .noBrackets)) /*encoding: URLEncoding.default*/)
+        AF.request(url, method: .get, parameters: parameters, encoder: URLEncodedFormParameterEncoder(encoder: URLEncodedFormEncoder(arrayEncoding: .noBrackets)))
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .responseData { response in
@@ -70,7 +70,6 @@ class NetworkManager {
     // MARK: - Uses to remove searching parameter when search field cleared
     func removeParameterFromRequest(field: String) {
         parametersDictionary.removeValue(forKey: field)
-        print("parametersDictionary \(parametersDictionary)")
     }
     
     // MARK: - Private Methods
@@ -112,7 +111,6 @@ class NetworkManager {
         } else {
             parametersDictionary.removeValue(forKey: field)
         }
-        print("parametersDictionary \(parametersDictionary)")
     }
     
     private func makeParametersForRequest() {
