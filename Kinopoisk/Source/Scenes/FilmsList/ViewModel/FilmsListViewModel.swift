@@ -13,11 +13,8 @@ class FilmsListViewModel: FilmsListViewModelType {
     
     var dataCommunicator: DataCommunicator
     
-    private var selectedFilmTypes: [Film.FilmType] = [] {
-        didSet {
-//            print("FilmsListViewModel \(selectedFilmTypes)")
-        }
-    }
+    // MARK: Subscriptions from DataCommunicator
+    private var selectedFilmTypes: [Film.FilmType] = []
     
     // MARK: - Delegate
     

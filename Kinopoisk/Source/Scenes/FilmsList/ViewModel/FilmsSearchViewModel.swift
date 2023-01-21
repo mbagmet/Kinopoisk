@@ -13,28 +13,13 @@ class FilmsSearchViewModel: FilmsSearchViewModelType {
     
     var dataCommunicator: DataCommunicator
     
+    // MARK: Subscriptions from DataCommunicator
     private var selectedFilmTypes: [Film.FilmType] = [] {
         didSet {
-            //resetPageNumber()
-
-            guard let filter = filter, isFiltering else {
-                if isFiltering {
-                    getFilmsListFromModel()
-                }
-                return
-            }
-
-            fetchMovies(filmName: nil, filter: filter) { [weak self] in
-                self?.isLoading = false
-                self?.updateFilmsListModel()
-            }
+            makeFiltering()
         }
     }
-    private var isFiltering = false {
-        didSet {
-//            print("isFiltering FilmsSearchViewModel: \(isFiltering)")
-        }
-    }
+    private var isFiltering = false
     
     // MARK: - Delegate
     
@@ -48,6 +33,9 @@ class FilmsSearchViewModel: FilmsSearchViewModelType {
     var searchQuery: String?
     var filter: [String]? {
         return prepareFilterArray(selectedFilmTypes: selectedFilmTypes)
+    }
+    var hasParametersForFiltering: Bool {
+        return selectedFilmTypes != [] ? true : false
     }
 
     private let networkManager = NetworkManager()
@@ -85,9 +73,14 @@ class FilmsSearchViewModel: FilmsSearchViewModelType {
         delegate?.updateModel(with: model)
     }
     
-    func getFilmsListFromModel() {
-        delegate?.resetModel()
+    func getFilmsListFromModelOrFilter() {
         networkManager.removeParameterFromRequest(field: NetworkManager.kinopoiskAPI.fieldName)
+        
+        if hasParametersForFiltering {
+            restoreFiltering()
+        } else {
+            delegate?.resetModel()
+        }
     }
     
     // MARK: - Private Methods
@@ -101,6 +94,29 @@ class FilmsSearchViewModel: FilmsSearchViewModelType {
             return filter
         }
         return nil
+    }
+    
+    private func makeFiltering() {
+        guard let filter = filter, isFiltering else {
+            if isFiltering {
+                delegate?.resetModel()
+            }
+            return
+        }
+
+        fetchMovies(filmName: nil, filter: filter) { [weak self] in
+            self?.isLoading = false
+            self?.updateFilmsListModel()
+        }
+    }
+    
+    private func restoreFiltering() {
+        guard let filter = filter else { return }
+
+        fetchMovies(filmName: nil, filter: filter) { [weak self] in
+            self?.isLoading = false
+            self?.updateFilmsListModel()
+        }
     }
     
 //    private func resetPageNumber() {

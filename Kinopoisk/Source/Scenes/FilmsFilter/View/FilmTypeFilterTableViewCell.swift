@@ -40,9 +40,7 @@ class FilmTypeFilterTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        // MARK: View Setup
-//        setupHierarchy()
-//        setupLayout()
+        // View Setup
     }
 
     required init?(coder aDecoder: NSCoder) {

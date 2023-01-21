@@ -49,14 +49,14 @@ extension FilmsSearchViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        viewModel?.getFilmsListFromModel()
+        viewModel?.getFilmsListFromModelOrFilter()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let filmName = searchBar.text else { return }
         
         if filmName  == "" {
-            viewModel?.getFilmsListFromModel()
+            viewModel?.getFilmsListFromModelOrFilter()
         } else if filmName.count >= Metric.numberOfCharactersToStartSearch {
             getFilmsFromSearchResult(filmName: filmName)
         }

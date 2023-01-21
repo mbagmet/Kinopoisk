@@ -16,7 +16,6 @@ class FilmTypeFilterTableViewCellViewModel: FilmTypeFilterTableViewCellViewModel
     // MARK: - Properties
     
     var isSelected = false
-    
     var categoryTitle: String? {
         return filmTypeCase.displayValue
     }

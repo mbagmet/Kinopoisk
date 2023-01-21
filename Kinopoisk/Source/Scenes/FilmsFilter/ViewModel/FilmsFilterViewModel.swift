@@ -12,6 +12,8 @@ class FilmsFilterViewModel: FilmsFilterViewModelType {
     // MARK: - DataCommunicator
     
     var dataCommunicator: DataCommunicator
+    
+    // MARK: Soure properties for DataCommunicator
     var selectedFilmTypes: [Film.FilmType] = [] {
         didSet {
             dataCommunicator.update(data: selectedFilmTypes)
@@ -21,7 +23,6 @@ class FilmsFilterViewModel: FilmsFilterViewModelType {
     var isFiltering = false {
         didSet {
             dataCommunicator.update(data: isFiltering)
-//            print("isFiltering во FilmsFilterViewModel: \(isFiltering)")
         }
     }
 
@@ -69,8 +70,7 @@ class FilmsFilterViewModel: FilmsFilterViewModelType {
         } else if let index = selectedFilmTypes.firstIndex(of: option) {
             selectedFilmTypes.remove(at: index)
         }
-        
-//        print("FilmsFilterViewModel \(selectedFilmTypes)")
+
         completion()
     }
     
