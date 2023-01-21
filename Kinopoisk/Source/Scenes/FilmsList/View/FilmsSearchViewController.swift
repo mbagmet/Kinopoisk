@@ -22,7 +22,7 @@ class FilmsSearchViewController: UISearchController {
     
     // MARK: - Init
     
-    init(/*viewModelDelegate: FilmsSearchViewModelDelegate?, errorHandlingDelegate: FilmsErrorHandlingDelegate?*/) {
+    init() {
         super.init(searchResultsController: nil)
         
         // MARK: Configuration
@@ -35,8 +35,8 @@ class FilmsSearchViewController: UISearchController {
     
     // MARK: - Private Methods
     private func getFilmsFromSearchResult(filmName: String) {
-        viewModel?.fetchMovies(filmName: filmName, completion: {
-            self.viewModel?.updateFilmsListModel()
+        viewModel?.fetchMovies(filmName: filmName, filter: viewModel?.filter, completion: { [weak self] in
+            self?.viewModel?.updateFilmsListModel()
         })
     }
 }

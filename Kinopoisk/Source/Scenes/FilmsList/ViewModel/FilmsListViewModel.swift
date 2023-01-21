@@ -15,7 +15,7 @@ class FilmsListViewModel: FilmsListViewModelType {
     
     private var selectedFilmTypes: [Film.FilmType] = [] {
         didSet {
-            print("FilmsListViewModel \(selectedFilmTypes)")
+//            print("FilmsListViewModel \(selectedFilmTypes)")
         }
     }
     
@@ -54,6 +54,7 @@ class FilmsListViewModel: FilmsListViewModelType {
     // MARK: - Methods
     
     func fetchMovies(page: Int? = nil, completion: @escaping() -> ()) {
+        isLoading = true
         networkManager.fetchData(page: page) { [weak self] movies, page, totalPages in
             if self?.model != nil {
                 self?.model?.append(contentsOf: movies)
@@ -108,9 +109,8 @@ class FilmsListViewModel: FilmsListViewModelType {
         guard let currentPage = currentPage, let totalPages = totalPages else { return }
         
         if currentPage < totalPages && !isLoading {
-            isLoading = true
-            fetchMovies(page: currentPage + 1) {
-                self.isLoading = false
+            fetchMovies(page: currentPage + 1) { [weak self] in
+                self?.isLoading = false
             }
         }
     }

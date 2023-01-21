@@ -15,15 +15,19 @@ class FilmsFilterViewModel: FilmsFilterViewModelType {
     var selectedFilmTypes: [Film.FilmType] = [] {
         didSet {
             dataCommunicator.update(data: selectedFilmTypes)
+            isFiltering = true
+        }
+    }
+    var isFiltering = false {
+        didSet {
+            dataCommunicator.update(data: isFiltering)
+//            print("isFiltering во FilmsFilterViewModel: \(isFiltering)")
         }
     }
 
     // MARK: - Properties
     
     var filmType: [Film.FilmType: String]?
-    //var selectedFilmTypes: [Film.FilmType] = []
-    
-    var selectedFilmTypesChanged: (([Film.FilmType]) -> Void)?
     
     private var keys: [Film.FilmType]?
     private var selectedIndexPath: IndexPath?
@@ -66,7 +70,7 @@ class FilmsFilterViewModel: FilmsFilterViewModelType {
             selectedFilmTypes.remove(at: index)
         }
         
-        print("FilmsFilterViewModel \(selectedFilmTypes)")
+//        print("FilmsFilterViewModel \(selectedFilmTypes)")
         completion()
     }
     

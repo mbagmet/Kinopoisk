@@ -13,6 +13,7 @@ protocol FilmsFilterViewModelType {
     
     var filmType: [Film.FilmType: String]? { get }
     var selectedFilmTypes: [Film.FilmType] { get set }
+    var isFiltering: Bool { get set }
     
     func numberOfRows() -> Int
     func makeCellViewModel(forIndexPath indexPath: IndexPath) -> FilmTypeFilterTableViewCellViewModelType?

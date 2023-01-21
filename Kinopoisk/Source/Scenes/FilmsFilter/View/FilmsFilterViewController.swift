@@ -30,6 +30,11 @@ class FilmsFilterViewController: UIViewController {
         setupTableCells()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewModel?.isFiltering = false
+    }
+    
     // MARK: - Views
 
     private lazy var scrollView = UIScrollView()

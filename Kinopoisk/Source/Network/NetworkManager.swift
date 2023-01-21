@@ -15,24 +15,29 @@ class NetworkManager {
     var delegate: NetworkManagerErrorHandlerDelegate?
     
     private var url: String { "\(kinopoiskAPI.domain)/\(kinopoiskSections.movie)" }
-    private var parameters = ["token": kinopoiskAPI.token,
-                              "limit": kinopoiskAPI.itemsPerPage,
-                              "sortType": kinopoiskAPI.sortType,
-                              "sortField": kinopoiskAPI.sortField]
+    private var parameters = ["token": [kinopoiskAPI.token],
+                              "limit": [kinopoiskAPI.itemsPerPage],
+                              "sortType": [kinopoiskAPI.sortType],
+                              "sortField": [kinopoiskAPI.sortField]]
+    
+    private typealias ParametersDictionary = [String: [String: [String]]]
+    private var parametersDictionary: ParametersDictionary = [:]
+    private var previousSearchValue: String?
 
     // MARK: - Methods
     
-    func fetchData(filmName: String? = nil, page: Int? = nil, completion: @escaping ([Film], Int, Int) -> ()) {
-        addParametersToRequest(filmName: filmName, page: page)
+    // MARK: - Fetch data for Films list, searching and filtering
+    func fetchData(filmName: String? = nil, page: Int? = nil, filter: [String]? = nil, completion: @escaping ([Film], Int, Int) -> ()) {
+        addParametersToRequest(filmName: filmName, page: page, filter: filter)
     
-        AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default)
+        AF.request(url, method: .get, parameters: parameters, encoder: URLEncodedFormParameterEncoder(encoder: URLEncodedFormEncoder(arrayEncoding: .noBrackets)))
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .responseData { response in
                 self.validateResponse(response: response)
             }
             .responseDecodable(of: Films.self) { (response) in
-//                debugPrint(response)
+                //debugPrint(response)
                 guard let films = response.value?.all else { return }
                 if films.count == 0 {
                     self.delegate?.handleErrorMessage(message: CommonStrings.failureMessageText)
@@ -45,10 +50,11 @@ class NetworkManager {
             }
     }
     
+    // MARK: - Fetch data for Film detail
     func fetchFilm(for filmID: Int?, completion: @escaping (Film) -> ()) {
         addParametersToRequest(filmID: filmID)
         
-        AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default)
+        AF.request(url, method: .get, parameters: parameters, encoder: URLEncodedFormParameterEncoder(encoder: URLEncodedFormEncoder(arrayEncoding: .noBrackets)) /*encoding: URLEncoding.default*/)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .responseData { response in
@@ -59,6 +65,12 @@ class NetworkManager {
                 guard let film = response.value else { return }
                 completion(film)
             }
+    }
+    
+    // MARK: - Uses to remove searching parameter when search field cleared
+    func removeParameterFromRequest(field: String) {
+        parametersDictionary.removeValue(forKey: field)
+        print("parametersDictionary \(parametersDictionary)")
     }
     
     // MARK: - Private Methods
@@ -72,24 +84,60 @@ class NetworkManager {
         }
     }
     
-    private func addParametersToRequest(filmName: String? = nil, filmID: Int? = nil, page: Int? = nil) {
-        if let name = filmName {
-            switch name {
-            case "":
-                parameters.removeValue(forKey: "search")
-                parameters.removeValue(forKey: "field")
-            default:
-                parameters["search"] = name
-                parameters["field"] = kinopoiskAPI.field
-            }
-        }
-        if let id = filmID {
-            parameters["search"] = String(id)
-            parameters["field"] = kinopoiskAPI.fieldID
+    private func addParametersToRequest(filmName: String? = nil, filmID: Int? = nil, page: Int? = nil, filter: [String]? = nil) {
+        
+        parametersDictionary = [:]
+        
+        updateValuesAtParametersDictionary(field: kinopoiskAPI.fieldName, value: filmName)
+        updateValuesAtParametersDictionary(field: kinopoiskAPI.fieldType, values: filter)
+        
+        if let filmID = filmID {
+            updateValuesAtParametersDictionary(field: kinopoiskAPI.fieldID, value: String(filmID))
         }
         if let page = page {
-            parameters["page"] = String(page)
+            updateValuesAtParametersDictionary(field: kinopoiskAPI.fieldPage, key: kinopoiskAPI.fieldPage, value: String(page))
         }
+        
+        makeParametersForRequest()
+    }
+    
+    private func updateValuesAtParametersDictionary(field: String,
+                                                    key: String = kinopoiskAPI.search,
+                                                    value: String? = nil,
+                                                    values: [String]? = nil) {
+        if let parameterValues = values {
+            parametersDictionary[field] = [key: parameterValues]
+        } else if let parameterValue = value {
+            parametersDictionary[field] = [key: [parameterValue]]
+        } else {
+            parametersDictionary.removeValue(forKey: field)
+        }
+        print("parametersDictionary \(parametersDictionary)")
+    }
+    
+    private func makeParametersForRequest() {
+        var fieldValues = [String]()
+        var searchValues: [String]?
+        
+        for (mainKey, mainValue) in parametersDictionary {
+            for (key, value) in mainValue {
+                if key == kinopoiskAPI.search {
+                    
+                    // MARK: fields
+                    fieldValues = fieldValues + Array(repeating: mainKey, count: value.count)
+                    parameters.updateValue(fieldValues, forKey: kinopoiskAPI.field)
+                    
+                    // MARK: values array
+                    searchValues = (searchValues ?? []) + value
+                    
+                } else {
+                    parameters.updateValue(value, forKey: key)
+                }
+            }
+        }
+        
+        guard let searchValues = searchValues else { return }
+        parameters.updateValue(searchValues, forKey: kinopoiskAPI.search)
     }
 }
 
@@ -97,11 +145,15 @@ extension NetworkManager {
     enum kinopoiskAPI {
         static let domain = "https://api.kinopoisk.dev"
         static let token = "MG7QBWA-KJ8MC4G-JZTTK0F-Q1C8N70"
-        static let field = "name"
+        static let fieldName = "name"
+        static let search = "search"
+        static let field = "field"
         static let itemsPerPage = "100"
         static let sortField = "rating.kp"
         static let sortType = "-1"
         static let fieldID = "id"
+        static let fieldType = "type"
+        static let fieldPage = "page"
     }
     
     enum kinopoiskSections {
