@@ -11,10 +11,12 @@ protocol FilmsListViewModelType {
     
     // MARK: Delegates
     var errorHandlingDelegate: FilmsErrorHandlingDelegate? { get set }
+    var delegate: FilmsListViewModelDelegate? { get set }
     
     // MARK: Properties
     var model: [Film]? { get }
     var films: Box<[Film]?> { get }
+    var needToResetScroll: Box<Bool> { get }
     var isLoading: Bool { get set }
     
     // MARK: Fetching data

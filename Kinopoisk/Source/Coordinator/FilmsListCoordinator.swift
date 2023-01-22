@@ -31,6 +31,7 @@ class FilmsListCoordinator: Coordinator, FilmsListFlow {
         filmsListViewController.coordinator = self
         filmsListViewController.viewModel = viewModel
         filmsListViewController.searchCoordinator = coordinateToFilmSearch()
+        filmsListViewController.viewModel?.delegate = filmsListViewController.searchCoordinator?.viewModel
         
         filmsListViewController.navigationItem.searchController = filmsListViewController.searchCoordinator?.searchViewController
         

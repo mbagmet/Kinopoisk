@@ -10,4 +10,5 @@ import Foundation
 protocol FilmsSearchViewModelDelegate: AnyObject {
     func updateModel(with searchResults: [Film]?)
     func resetModel()
+    func askToScrollTableToTop()
 }

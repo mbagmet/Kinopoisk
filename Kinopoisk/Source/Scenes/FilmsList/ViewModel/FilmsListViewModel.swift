@@ -16,19 +16,26 @@ class FilmsListViewModel: FilmsListViewModelType {
     // MARK: Subscriptions from DataCommunicator
     private var selectedFilmTypes: [Film.FilmType] = []
     
+    // MARK: - Network
+    
+    private let networkManager = NetworkManager()
+    
     // MARK: - Delegate
     
     weak var errorHandlingDelegate: FilmsErrorHandlingDelegate?
+    weak var delegate: FilmsListViewModelDelegate?
     
-    // MARK: - Properties
+    // MARK: - Model
     
     var model: [Film]?
     var films: Box<[Film]?> = Box(nil)
     
+    // MARK: - Properties
+
+    var needToResetScroll: Box<Bool> = Box(false)
     var isLoading = false
     
     private var selectedIndexPath: IndexPath?
-    private let networkManager = NetworkManager()
     private var isSearching = false
     private var currentPage: Int?
     private var totalPages: Int?
@@ -98,6 +105,9 @@ class FilmsListViewModel: FilmsListViewModelType {
         if indexPath.row == (films.value?.count ?? 0) - Metric.rowsBeloreFetch {
             if !isSearching {
                 loadNextPage()
+            } else {
+                delegate?.loadNextPage()
+                //needSearchPaging = true
             }
         }
     }
@@ -124,6 +134,12 @@ extension FilmsListViewModel: FilmsSearchViewModelDelegate {
     func resetModel() {
         films.value = model
         isSearching = false
+    }
+    
+    func askToScrollTableToTop() {
+        if (films.value?.count ?? 0) > 0 {
+            needToResetScroll.value = true
+        }
     }
 }
 

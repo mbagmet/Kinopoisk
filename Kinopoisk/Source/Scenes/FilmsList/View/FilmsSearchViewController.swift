@@ -35,8 +35,10 @@ class FilmsSearchViewController: UISearchController {
     
     // MARK: - Private Methods
     private func getFilmsFromSearchResult(filmName: String) {
-        viewModel?.fetchMovies(filmName: filmName, filter: viewModel?.filter, completion: { [weak self] in
+        viewModel?.resetPageNumber()
+        viewModel?.fetchMovies(filmName: filmName, filter: viewModel?.filter, page: 1, completion: { [weak self] in
             self?.viewModel?.updateFilmsListModel()
+            self?.viewModel?.delegate?.askToScrollTableToTop()
         })
     }
 }
@@ -57,9 +59,11 @@ extension FilmsSearchViewController: UISearchBarDelegate {
         
         if filmName  == "" {
             viewModel?.getFilmsListFromModelOrFilter()
-        } else if filmName.count >= Metric.numberOfCharactersToStartSearch {
-            getFilmsFromSearchResult(filmName: filmName)
         }
+//        Uncomment if you need searching diring search query typing
+//        else if filmName.count >= Metric.numberOfCharactersToStartSearch {
+//            getFilmsFromSearchResult(filmName: filmName)
+//        }
     }
 }
 

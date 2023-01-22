@@ -88,6 +88,13 @@ extension FilmsListViewController {
                 self.filmsTableView.reloadData()
             }
         })
+        viewModel?.needToResetScroll.bind(listener: { needToResetScroll in
+            if needToResetScroll {
+                DispatchQueue.main.async {
+                    self.filmsTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                }
+            }
+        })
     }
 }
 
