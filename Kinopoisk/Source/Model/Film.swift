@@ -138,12 +138,28 @@ extension Film {
         }
     }
 
-    enum FilmType: String, Decodable {
-        case animatedSeries = "animated-series"
-        case anime = "anime"
-        case cartoon = "cartoon"
+    enum FilmType: String, CaseIterable, Comparable, Decodable {
         case movie = "movie"
         case tvSeries = "tv-series"
+        case cartoon = "cartoon"
+        case animatedSeries = "animated-series"
+        case anime = "anime"
+
+        var displayValue: String {
+            switch self {
+            case .movie: return "Фильмы"
+            case .tvSeries: return "Сериалы"
+            case .cartoon: return "Мультфильмы"
+            case .animatedSeries: return "Многосерийные мультфильмы"
+            case .anime: return "Аниме"
+            }
+        }
+        
+        static let localizedTitle = "Категория"
+        
+        static func < (lhs: FilmType, rhs: FilmType) -> Bool {
+            return lhs.displayValue < rhs.displayValue
+        }
     }
     
     // MARK: - Videos

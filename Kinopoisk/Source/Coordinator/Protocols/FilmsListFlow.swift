@@ -9,4 +9,5 @@ import Foundation
 
 protocol FilmsListFlow: AnyObject {
     func coordinateToFilmDetail(viewModel: FilmDetailViewModelType?)
+    func coordinateToFilmFilter()
 }

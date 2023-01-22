@@ -13,14 +13,12 @@ class FilmsListViewController: UIViewController {
     // MARK: - Properties
     
     var coordinator: FilmsListFlow?
+    var searchCoordinator: FilmsSearchCoordinator?
     var viewModel: FilmsListViewModelType?
     
     // MARK: - Views
 
     private lazy var filmsTableView = UITableView(frame: view.bounds, style: UITableView.Style.plain)
-    
-    private lazy var searchController = FilmsSearchViewController(viewModelDelegate: viewModel as? FilmsSearchViewModelDelegate,
-                                                                  errorHandlingDelegate: self)
     
     // MARK: - Lifecycle
 
@@ -44,9 +42,6 @@ class FilmsListViewController: UIViewController {
         setupDataSource()
         setupDelegate()
         setupTableCells()
-        
-        // MARK: Search setup
-        setupSearch()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,6 +88,13 @@ extension FilmsListViewController {
                 self.filmsTableView.reloadData()
             }
         })
+        viewModel?.needToResetScroll.bind(listener: { needToResetScroll in
+            if needToResetScroll {
+                DispatchQueue.main.async {
+                    self.filmsTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                }
+            }
+        })
     }
 }
 
@@ -105,7 +107,10 @@ extension FilmsListViewController {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithDefaultBackground()
         navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.tintColor = .darkText
+        navigationController?.navigationBar.tintColor =  .darkText | .lightText
+        
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem.menuButton(self, action: #selector(presentFilter), image: UIImage(systemName: "slider.horizontal.3"))
     }
 }
 
@@ -143,17 +148,17 @@ extension FilmsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let viewModel = viewModel else { return }
         viewModel.selectRow(atIndexPath: indexPath)
+        tableView.deselectRow(at: indexPath, animated: true)
         
         coordinator?.coordinateToFilmDetail(viewModel: viewModel.makeDetailViewModel())
     }
 }
 
-// MARK: - Search
+// MARK: - User Actions
 
 extension FilmsListViewController {
-    private func setupSearch() {
-        navigationItem.searchController = searchController
-        searchController.searchBar.delegate = searchController
+    @objc func presentFilter() {
+        coordinator?.coordinateToFilmFilter()
     }
 }
 
@@ -176,7 +181,6 @@ extension FilmsListViewController {
     }
     
     enum Strings {
-        static let searchBarPlaceholder = "Поиск по названию фильма"
         static let navigationTitle = "Фильмы"
     }
 }

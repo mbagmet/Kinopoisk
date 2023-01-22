@@ -15,9 +15,14 @@ protocol FilmsSearchViewModelType: AnyObject {
     
     // MARK: Properties
     var model: [Film]? { get }
+    var searchQuery: String? { get set }
+    var filter: [String]? { get }
+    var isLoading: Bool { get set }
+    var hasParametersForFiltering: Bool { get }
     
     // MARK: Fetching data
-    func fetchMovies(filmName: String?, completion: @escaping() -> ())
+    func fetchMovies(filmName: String?, filter: [String]?, page: Int?, completion: @escaping() -> ())
     func updateFilmsListModel()
-    func getFilmsListFromModel()
+    func getFilmsListFromModelOrFilter()
+    func resetPageNumber()
 }

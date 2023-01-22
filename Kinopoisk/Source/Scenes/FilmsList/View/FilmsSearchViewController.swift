@@ -22,16 +22,11 @@ class FilmsSearchViewController: UISearchController {
     
     // MARK: - Init
     
-    init(viewModelDelegate: FilmsSearchViewModelDelegate?, errorHandlingDelegate: FilmsErrorHandlingDelegate?) {
+    init() {
         super.init(searchResultsController: nil)
         
         // MARK: Configuration
         self.searchBar.placeholder = Strings.searchBarPlaceholder
-        
-        // MARK: ViewModel configuration
-        viewModel = FilmsSearchViewModel()
-        viewModel?.delegate = viewModelDelegate
-        viewModel?.errorHandlingDelegate = errorHandlingDelegate
     }
     
     required init?(coder: NSCoder) {
@@ -40,8 +35,10 @@ class FilmsSearchViewController: UISearchController {
     
     // MARK: - Private Methods
     private func getFilmsFromSearchResult(filmName: String) {
-        viewModel?.fetchMovies(filmName: filmName, completion: {
-            self.viewModel?.updateFilmsListModel()
+        viewModel?.resetPageNumber()
+        viewModel?.fetchMovies(filmName: filmName, filter: viewModel?.filter, page: 1, completion: { [weak self] in
+            self?.viewModel?.updateFilmsListModel()
+            self?.viewModel?.delegate?.askToScrollTableToTop()
         })
     }
 }
@@ -54,17 +51,19 @@ extension FilmsSearchViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        viewModel?.getFilmsListFromModel()
+        viewModel?.getFilmsListFromModelOrFilter()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let filmName = searchBar.text else { return }
         
         if filmName  == "" {
-            viewModel?.getFilmsListFromModel()
-        } else if filmName.count >= Metric.numberOfCharactersToStartSearch {
-            getFilmsFromSearchResult(filmName: filmName)
+            viewModel?.getFilmsListFromModelOrFilter()
         }
+//        Uncomment if you need searching diring search query typing
+//        else if filmName.count >= Metric.numberOfCharactersToStartSearch {
+//            getFilmsFromSearchResult(filmName: filmName)
+//        }
     }
 }
 

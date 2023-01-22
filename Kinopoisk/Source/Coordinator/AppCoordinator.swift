@@ -12,6 +12,7 @@ class AppCoordinator: Coordinator {
     // MARK: - Properties
     
     var navigationController: UINavigationController
+    var dataCommunicator = DataCommunicator()
     
     // MARK: - Initializers
     
@@ -22,7 +23,7 @@ class AppCoordinator: Coordinator {
     // MARK: - Methods
     
     func start() {
-        let filmsListCoordinator = FilmsListCoordinator(navigationController: navigationController)
+        let filmsListCoordinator = FilmsListCoordinator(navigationController: navigationController, dataCommunicator: dataCommunicator)
         coordinate(to: filmsListCoordinator)
     }
 }

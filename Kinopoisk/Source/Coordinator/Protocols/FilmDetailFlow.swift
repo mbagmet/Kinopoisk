@@ -8,7 +8,5 @@
 import Foundation
 
 protocol FilmDetailFlow: AnyObject {
-    var viewModel: FilmDetailViewModelType? { get }
-    
     func dismissDetail()
 }
