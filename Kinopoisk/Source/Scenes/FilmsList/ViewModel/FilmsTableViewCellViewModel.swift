@@ -38,6 +38,7 @@ class FilmsTableViewCellViewModel: FilmsTableViewCellViewModelType {
     // MARK: - Methods
     
     func getImage(for imageView: UIImageView?) {
+        imageView?.image = nil
         film.poster?.getImage(size: .small, completion: { data in
             guard let data = data else { return }
             imageView?.image = UIImage(data: data)
