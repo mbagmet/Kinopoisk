@@ -22,7 +22,6 @@ class NetworkManager {
     
     private typealias ParametersDictionary = [String: [String: [String]]]
     private var parametersDictionary: ParametersDictionary = [:]
-    private var previousSearchValue: String?
 
     // MARK: - Methods
     
@@ -142,7 +141,7 @@ class NetworkManager {
 extension NetworkManager {
     enum kinopoiskAPI {
         static let domain = "https://api.kinopoisk.dev"
-        static let token = "MG7QBWA-KJ8MC4G-JZTTK0F-Q1C8N70"
+        static let token = "EAFNMQM-5M1MBJM-HER29SG-6Y1K8HN"
         static let fieldName = "name"
         static let search = "search"
         static let field = "field"
